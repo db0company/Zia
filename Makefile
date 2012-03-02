@@ -56,12 +56,16 @@ libclean	:
 libfclean	:
 			@(cd $(LIB_DIR) && make fclean)
 
+libdistclean	:	libfclean
+
 ## clean
 clean		:	libclean
 			$(RM) $(OBJS)
 
 fclean		:	libfclean clean
 			$(RM) $(BIN_DIR)$(NAME)
+
+distclean	:	fclean
 
 ## re
 re		:	fclean libre all
