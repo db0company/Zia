@@ -1,0 +1,27 @@
+
+#include <list>
+#include <iostream>
+#include "testexcept.hpp"
+
+int main() {
+	unsigned int n_tests;
+	std::list<int(*)(void)> tests{${TESTS}};
+
+	try {
+		for (auto f : tests)
+			n_tests += f();
+	}
+	catch (TestExcept e) {
+		std::cerr << "Error on test " << e.testName()
+			<< ": " << e.what() << std::endl;
+	}
+	catch (...) {
+		std::cerr << "Unexpected exception caught" << std::endl;
+	}
+
+	std::cout << "Successfully passed " << n_tests
+		<< " tests on " << tests.size()
+		<< " interfaces" << std::endl;
+
+	return 0;
+}
