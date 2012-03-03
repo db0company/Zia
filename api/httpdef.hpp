@@ -8,16 +8,14 @@
 
 namespace zia { namespace http {
 	enum version {
-		UNKNOWN = -1,
+		VERSION_UNKNOWN = -1,
 
 		HTTP_10 = 0,
 		HTTP_11,
-
-		NUMBER,
 	};
 
 	enum method {
-		UNKNOWN = -1,
+		METHOD_UNKNOWN = -1,
 
 		GET = 0,
 		POST,
@@ -27,11 +25,11 @@ namespace zia { namespace http {
 		TRACE,
 		OPTIONS,
 		CONNECT,
-
-		NUMBER,
 	};
 
 	enum code {
+		CODE_UNKNOWN			= -1,
+
 		CONTINUE                        = 100,
                 SWITCHING_PROTOCOLS             = 101,
 
@@ -76,8 +74,6 @@ namespace zia { namespace http {
                 SERVICE_UNAVAILABLE             = 503,
                 GATEWAY_TIMEOUT			= 504,
                 HTTP_VERSION_NOT_SUPPORTED      = 505,
-
-		NUMBER = 40,
 	};
 }}
 
