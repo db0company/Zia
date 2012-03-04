@@ -7,25 +7,36 @@
 NAME		=	zia
 
 ## Directories
+LIB_DIR		=	lib/
+BIN_DIR		=	bin/
+
 SRC_DIR		=	src/
 
 MAIN_DIR	=	$(SRC_DIR)$(NAME)/
-INIT_DIR	=	$(SRC_DIR)init/
+
+NTWK_DIR	=	$(SRC_DIR)network/
 
 TOOL_DIR	=	$(SRC_DIR)tools/
 ERR_DIR		=	$(SRC_DIR)error/
 
-INCLUDE		=	-Iinclude/
-LIB_DIR		=	lib/
-BIN_DIR		=	bin/
+INCLUDE		=	-Iinclude/				\
+			-Isrc/					\
+			-Iapi/					\
+			-I$(LIB_DIR)Thread/include/		\
+			-I$(LIB_DIR)SNetwork/include/		\
+			\
 
 ## Sources
 SRCS		=	$(MAIN_DIR)main.cpp			\
-			$(MAIN_DIR)$(NAME).cpp			\
+			$(MAIN_DIR)$(NAME)_main.cpp		\
+			\
+			$(MAIN_DIR)Zia.cpp			\
+			\
+			$(NTWK_DIR)ZiaNetwork.cpp		\
 			\
 
 ## Libraries
-LIB		=	
+LIB		=	-L$(LIB_DIR) -lSNetwork -lThread -ldl
 
 # Objects
 OBJS		=	$(SRCS:.cpp=.o)

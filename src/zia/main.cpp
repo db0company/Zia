@@ -4,5 +4,5 @@
 
 int		main(void)
 {
-  return (zia() ? EXIT_SUCCESS : EXIT_FAILURE);
+  return (zia_main() ? EXIT_SUCCESS : EXIT_FAILURE);
 }
