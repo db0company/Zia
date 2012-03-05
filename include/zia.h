@@ -1,7 +1,7 @@
 
-#ifndef		ZIA_H_
-# define	ZIA_H_
+#ifndef		ZIAMAIN_H_
+# define	ZIAMAIN_H_
 
-bool		zia(void);
+bool		zia_main(void);
 
-#endif		/* !ZIA_H_ */
+#endif		/* !ZIAMAIN_H_ */
