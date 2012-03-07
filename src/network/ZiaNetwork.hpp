@@ -10,7 +10,7 @@
 # include			"network.hpp"
 
 # ifdef _WIN32
-#  intclude			"TCPServerSocketWindows.h"
+#  include			"TCPServerSocketWindows.h"
 # else
 #  include			"TCPServerSocketUnix.h"
 # endif
