@@ -6,53 +6,101 @@
 #ifndef __REQUEST_H__
 #define __REQUEST_H__
 
+#include <map>
+#include <string>
 #include <irequest.hpp>
-#include "buffer.hpp"
 
-class Request : public zia::http::IRequest {
-	zia::http::IBuffer *_buffer;
+class Request : public zia::http::IRequest<std::string> {
+	typedef zia::http::IRequest<std::string> StringRequest;
+
+	std::string _buffer;
+
+	zia::http::method _method;
+	std::string _uri;
+	zia::http::version _version;
+
+	std::map<std::string, std::string> _headers;
 
 	public:
 	Request() {
-		_buffer = 0;
 	}
 	Request(std::string const &s) {
-		_buffer = new Buffer(s);
+		_buffer = s;
 	}
-	Request(zia::http::IBuffer *b) {
-		_buffer = b;
+	Request(StringRequest *b) {
+		_buffer = b->getBuffer();
 	}
 	~Request() {}
 
-	zia::http::IBuffer *getBuffer() const {
+	std::string const &getBuffer() const {
 		return _buffer;
 	}
 
-	void setBuffer(zia::http::IBuffer *buffer) {
+	zia::http::method getMethod() const {
+		return _method;
+	}
+	std::string const &getURI() const {
+		return _uri;
+	}
+	zia::http::version getVersion() const {
+		return _version;
+	}
+
+	std::string getHeaderContent(std::string const &header) {
+		return _headers[header];
+	}
+
+	std::list<std::pair<std::string, std::string>> getHeaders() const {
+		std::list<std::pair<std::string, std::string>> _headers_list;
+
+		for (auto &p : _headers)
+			_headers_list.push_back(p);
+
+		return _headers_list;
+	}
+	std::list<std::string> getHeadersName() const {
+		std::list<std::string> _headers_list;
+
+		for (auto &p : _headers)
+			_headers_list.push_back(p.first);
+
+		return _headers_list;
+	}
+	std::list<std::string> getHeadersContent() const {
+		std::list<std::string> _headers_list;
+
+		for (auto &p : _headers)
+			_headers_list.push_back(p.second);
+
+		return _headers_list;
+	}
+
+	void setBuffer(std::string const &buffer) {
 		_buffer = buffer;
 	}
 
-	zia::http::method getMethod() const {
-		return zia::http::method::METHOD_UNKNOWN;
+	void setMethod(zia::http::method new_method) {
+		_method = new_method;
 	}
-	std::string const &getURI() const {
-		return std::string("");
+	void setURI(std::string const &new_uri) {
+		_uri = new_uri;
 	}
-	zia::http::version getVersion() const {
-		return zia::http::version::VERSION_UNKNOWN;
+	void setVersion(zia::http::version new_version) {
+		_version = new_version;
 	}
 
-	std::string const &getHeaderContent(char const *header) {
-		return std::string("");
+	void setHeaderContent(std::string const &header_name,
+			      std::string const &content) {
+		_headers[header_name] = content;
 	}
-	std::list<std::string> getHeaders() const {
-		return {""};
+
+	void addHeader(std::string const &header_name,
+		       std::string const &content) {
+		_headers[header_name] = content;
 	}
-	std::list<std::string> getHeadersName() const {
-		return {""};
-	}
-	std::list<std::string> getHeadersContent() const {
-		return {""};
+
+	void removeHeader(std::string const &header_name) {
+		_headers.erase(header_name);
 	}
 };
 
