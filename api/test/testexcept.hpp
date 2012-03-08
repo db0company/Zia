@@ -9,6 +9,10 @@
 #include <string>
 #include <stdexcept>
 
+#define ASSERT(x, s...) do {\
+	if ((x) == false) throw TestExcept{TEST_NAME, { s }}; \
+} while (0)
+
 class TestExcept : public std::exception {
 	std::string _tst;
 	std::string _err;
