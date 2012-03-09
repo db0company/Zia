@@ -1,3 +1,8 @@
+/*
+ * IModule.h for zia
+ * by becker_g
+ */
+
 #ifndef		IMODULE_H__
 # define	IMODULE_H__
 
@@ -17,7 +22,7 @@ namespace zia
 	/* ************************************************************************* */
 		virtual void	connection() = 0;
 		virtual void	deconnexion() = 0;
-		virtual void	load(const zia::filesystem::dll *) = 0;
+		virtual void	load(const zia::filesystem::dll::AHandler *) = 0;
 		virtual void	unload() = 0;
 		virtual void	loadMethod(const zia::http::method&) = 0;
 		virtual void	unloadMethod(const zia::http::method&) = 0;
