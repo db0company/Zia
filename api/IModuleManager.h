@@ -10,14 +10,14 @@
 # include	<string>
 
 # include	"dll.hpp"
+# include	"irequest.hpp"
 # include	"IModule.h"
-
 namespace zia
 {
 	class IModuleManager
 	{
 	public:
-		virtual const IModuleManager * getInstance() = 0;
+		virtual ~IModuleManager() {}
 
 		virtual const std::list<const IModule *> & getModules() const = 0;
 
