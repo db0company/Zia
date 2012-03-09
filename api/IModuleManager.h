@@ -9,11 +9,6 @@
 
 class IModuleManager
 {
-private:
-	virtual ModuleManager(const ModuleManager&) = 0;
-	virtual ModuleManager &	operator=(const ModuleManager&) = 0;
-	virtual ~ModuleManager(void);
-
 public:
 	virtual const IModuleManager * getInstance() = 0;
 
