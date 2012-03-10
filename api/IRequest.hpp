@@ -1,5 +1,5 @@
 /*
- * irequest.hpp for zia
+ * IRequest.hpp for zia
  * by lenorm_f
  */
 
@@ -8,6 +8,15 @@
 
 #include <list>
 #include "httpdef.hpp"
+
+/*
+ * The IRequest interface is a way of abstracting an incoming/outgoing request.
+ * It provides several methods, ideally used by a buffer parser, that same
+ * buffer being of a chosen type when an IRequest is being implemented.
+ * Ideally, the buffer should be an std::string, but you can use whatever other
+ * type you want (QString, etc).
+ * The IRequest is not meant to parse the input buffer, it just handles it.
+ */
 
 namespace zia { namespace http {
 	template <typename T>
@@ -20,10 +29,14 @@ namespace zia { namespace http {
 		// Get the buffer associated to the request
 		virtual buffer_type const &getBuffer() const = 0;
 
-		// A few simple getters for the HTTP request attributes
+		// Get the HTTP method of the request
 		virtual method getMethod() const = 0;
+		// Get the URI requested by the request
 		virtual buffer_type const &getURI() const = 0;
+		// Get the HTTP version of the request
 		virtual version getVersion() const = 0;
+		// Get the content of the packet
+		virtual T const &getContent() const = 0;
 
 		// Get a particular entity-body, associated with a header name
 		virtual buffer_type getHeaderContent(buffer_type const &header_name) = 0;
@@ -44,6 +57,8 @@ namespace zia { namespace http {
 		virtual void setURI(buffer_type const &new_uri) = 0;
 		// Set the version of the HTTP request
 		virtual void setVersion(version new_version) = 0;
+		// Set the content of the packet
+		virtual void setContent(T const &content) = 0;
 
 		// Modify the body of the request
 		virtual void setHeaderContent(buffer_type const &header_name,

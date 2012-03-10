@@ -8,7 +8,7 @@
 
 #include <map>
 #include <string>
-#include <irequest.hpp>
+#include <IRequest.hpp>
 
 class Request : public zia::http::IRequest<std::string> {
 	typedef zia::http::IRequest<std::string> StringRequest;
