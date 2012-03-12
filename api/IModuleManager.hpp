@@ -10,8 +10,8 @@
 # include	<string>
 
 # include	"dll.hpp"
-# include	"irequest.hpp"
-# include	"IModule.h"
+# include	"IRequest.hpp"
+# include	"IModule.hpp"
 namespace zia
 {
 	class IModuleManager
