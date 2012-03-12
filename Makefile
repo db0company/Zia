@@ -1,4 +1,4 @@
-##
+
 ## Made by		db0
 ## Contact		db0company@gmail.com
 ## Website		http://db0.fr/
@@ -33,6 +33,9 @@ SRCS		=	$(MAIN_DIR)main.cpp			\
 			$(MAIN_DIR)Zia.cpp			\
 			\
 			$(NTWK_DIR)ZiaNetwork.cpp		\
+			\
+			$(TOOL_DIR)InChannel.cpp		\
+			$(TOOL_DIR)OutChannel.cpp		\
 			\
 
 ## Libraries
