@@ -9,6 +9,10 @@ namespace zia {
 /* ************************************************************************* */
 /*                             Attributes                                    */
 /* ************************************************************************* */
+    template <typename T>
+    std::function<T> load(std::string const &symbol_name) {
+      return std::function<T>(reinterpret_cast<T*>(load(symbol_name)));
+
  protected:
     void	(*onNewClient)(void);
     void	(*onClientLeave)(void);

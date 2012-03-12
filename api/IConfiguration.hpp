@@ -10,20 +10,16 @@
 #include <list>
 #include <ostream>
 
-namespace zia
-{
-  namespace config
-  {
+namespace zia {
+  namespace config {
 
-    enum Data_type
-      {
+    enum Data_type {
 	STRING,
 	INT,
 	DOUBLE,
       };
 
-    class Node
-    {
+    class Node {
 
     public:
 
@@ -53,8 +49,7 @@ namespace zia
       virtual void			dump(std::ostream &, int depth = 0, int = 0) const;
     };
 
-    class IConfiguration
-    {
+    class IConfiguration {
 
     public:
 

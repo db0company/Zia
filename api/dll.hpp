@@ -9,7 +9,8 @@
 #include <string>
 #include <functional>
 
-namespace zia { namespace filesystem {
+namespace zia {
+  namespace filesystem {
 	class dll {
 		public:
 		enum eResType {
@@ -37,6 +38,7 @@ namespace zia { namespace filesystem {
 		static AHandler *load(std::string const &dl_name, eResType symbols_resolution = RES_LAZY);
 		static void unload(AHandler*);
 	};
-}}
+  }
+}
 
 #endif

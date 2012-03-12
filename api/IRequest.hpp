@@ -18,7 +18,8 @@
  * The IRequest is not meant to parse the input buffer, it just handles it.
  */
 
-namespace zia { namespace http {
+namespace zia {
+  namespace http {
 	template <typename T>
 	class IRequest {
 		typedef T buffer_type;
@@ -71,6 +72,7 @@ namespace zia { namespace http {
 		// Remove a header from the request
 		virtual void removeHeader(buffer_type const &header_name) = 0;
 	};
-}}
+      }
+}
 
 #endif

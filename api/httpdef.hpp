@@ -6,7 +6,8 @@
 #ifndef __HTTPDEF_H__
 #define __HTTPDEF_H__
 
-namespace zia { namespace http {
+namespace zia {
+  namespace http {
 	enum version {
 		VERSION_UNKNOWN = -1,
 
@@ -75,6 +76,7 @@ namespace zia { namespace http {
                 GATEWAY_TIMEOUT			= 504,
                 HTTP_VERSION_NOT_SUPPORTED      = 505,
 	};
-}}
+  }
+}
 
 #endif

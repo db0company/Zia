@@ -1,5 +1,5 @@
 /*
- * IModuleManager.h for zia
+ * IModuleManager.hpp for zia
  * by becker_g
  */
 
@@ -12,14 +12,13 @@
 # include	"dll.hpp"
 # include	"IRequest.hpp"
 # include	"IModule.hpp"
-namespace zia
-{
-	class IModuleManager
-	{
+
+namespace zia {
+	class IModuleManager {
 	public:
 		virtual ~IModuleManager() {}
 
-		virtual const std::list<const IModule *> & getModules() const = 0;
+		virtual const std::list<const IModule *> & getModules()const = 0;
 
 		virtual const IModule *	loadModule(zia::filesystem::dll::AHandler *) = 0;
 		virtual const IModule *	unloadModule(const IModule *) = 0;
@@ -33,4 +32,5 @@ namespace zia
 		virtual const IRequest * getAnswer() = 0;
 	};
 }
+
 #endif		//! MODULEMANAGER_H__
