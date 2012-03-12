@@ -35,17 +35,38 @@ namespace zia {
 
       virtual ~Node() {}
 
+      // Overload of operator== to provide a keys matching test easily
       virtual bool			operator==(const std::string &) const;
+
       virtual Node			&operator=(const Node &);
       virtual Node			&operator=(const std::string &);
+
+      // Nodes agregation with replacement if necessary
       virtual Node			&operator+=(const Node &);
+
+      /* Access to the subnode matching key given as the first parameter
+	 if the subnode doesn't exist, it will be created */
       virtual Node			&operator[](const std::string &);
+
+      /* Read-only access to the subnode matching key given as the first parameter
+	 it requires the subnodes to be existing */
       virtual const Node		&operator[](const std::string &) const;
+
+      /* Return std::string corresponding to the value of the Node */
       virtual const std::string		&getValue() const;
+
+      /* Return std::string corresponding to the Key of the Node */
       virtual const std::string		&getName() const;
+
+      /* Return true if there's a subnode matching the key given in parameter */
       virtual bool			has(const std::string &) const;
+
+      /* Return the subnode matching the key given in parameter */
       virtual Node			&get(const std::string &);
 
+      /* Display the node recursively with the 2nd parameter as a limit for the depth,
+	 the third parameter is the number of nodes-levels already displayed : the
+	 function stop itself when third parameter == depth */
       virtual void			dump(std::ostream &, int depth = 0, int = 0) const;
     };
 
