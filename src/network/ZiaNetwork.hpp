@@ -4,7 +4,6 @@
 
 # include			<list>
 # include			<algorithm>
-# include			<boost/bind.hpp>
 
 # include			"conf.h"
 # include			"network.hpp"
