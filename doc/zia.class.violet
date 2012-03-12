@@ -1,0 +1,650 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="1.7.0_147-icedtea" class="java.beans.XMLDecoder">
+ <object class="com.horstmann.violet.ClassDiagramGraph">
+  <void method="addNode">
+   <object class="com.horstmann.violet.ClassNode" id="ClassNode0">
+    <void property="attributes">
+     <void property="text">
+      <string>ZiaNetwork network;
+ZiaModules modules;
+ZiaConfig configuration;</string>
+     </void>
+    </void>
+    <void property="methods">
+     <void property="text">
+      <string>bool init(void);
+bool run(void);
+</string>
+     </void>
+    </void>
+    <void property="name">
+     <void property="text">
+      <string>Zia</string>
+     </void>
+    </void>
+   </object>
+   <object class="java.awt.geom.Point2D$Double" id="Point2D$Double0">
+    <void class="java.awt.geom.Point2D$Double" method="getField">
+     <string>x</string>
+     <void method="set">
+      <object idref="Point2D$Double0">
+       <void class="java.awt.geom.Point2D$Double" method="getField">
+        <string>y</string>
+        <void method="set">
+         <object idref="Point2D$Double0">
+          <void method="setLocation">
+           <double>754.2518754031086</double>
+           <double>30.171572875253815</double>
+          </void>
+         </object>
+         <double>30.171572875253815</double>
+        </void>
+       </void>
+      </object>
+      <double>754.2518754031086</double>
+     </void>
+    </void>
+   </object>
+  </void>
+  <void method="addNode">
+   <object class="com.horstmann.violet.ClassNode" id="ClassNode1">
+    <void property="attributes">
+     <void property="text">
+      <string>ISelector *                   selector;
+ATCPServerSocket *            listener;
+bool                          connection;
+std::list&lt;ISocket *&gt;          clients;</string>
+     </void>
+    </void>
+    <void property="methods">
+     <void property="text">
+      <string>-  void                  run(void);
+-  void                  getNewClient(void);
+-  void                  readFromClients(void);
+-  bool                  readFromClient(ISocket *);
+-  void                  addClient(ATCPClientSocket *);
+-  bool                  delClient(ISocket *);</string>
+     </void>
+    </void>
+    <void property="name">
+     <void property="text">
+      <string>ZiaNetwork</string>
+     </void>
+    </void>
+   </object>
+   <object class="java.awt.geom.Point2D$Double" id="Point2D$Double1">
+    <void class="java.awt.geom.Point2D$Double" method="getField">
+     <string>x</string>
+     <void method="set">
+      <object idref="Point2D$Double1">
+       <void class="java.awt.geom.Point2D$Double" method="getField">
+        <string>y</string>
+        <void method="set">
+         <object idref="Point2D$Double1">
+          <void method="setLocation">
+           <double>613.0113267570426</double>
+           <double>168.76450198781717</double>
+          </void>
+         </object>
+         <double>168.76450198781717</double>
+        </void>
+       </void>
+      </object>
+      <double>613.0113267570426</double>
+     </void>
+    </void>
+   </object>
+  </void>
+  <void method="addNode">
+   <object class="com.horstmann.violet.ClassNode" id="ClassNode2">
+    <void property="attributes">
+     <void property="text">
+      <string>    void        (*onNewClient)(void);
+    void        (*onClientLeave)(void);
+    void        (*onClientRequest)(void);
+</string>
+     </void>
+    </void>
+    <void property="methods">
+     <void property="text">
+      <string>+ bool                  openConnection(int port) = 0;
++ void                  closeConnection(void) = 0;
++ bool                  isConnected(void) = 0;</string>
+     </void>
+    </void>
+    <void property="name">
+     <void property="text">
+      <string>ANetwork
+</string>
+     </void>
+    </void>
+   </object>
+   <object class="java.awt.geom.Point2D$Double" id="Point2D$Double2">
+    <void class="java.awt.geom.Point2D$Double" method="getField">
+     <string>x</string>
+     <void method="set">
+      <object idref="Point2D$Double2">
+       <void class="java.awt.geom.Point2D$Double" method="getField">
+        <string>y</string>
+        <void method="set">
+         <object idref="Point2D$Double2">
+          <void method="setLocation">
+           <double>319.3889603929564</double>
+           <double>242.8772003600253</double>
+          </void>
+         </object>
+         <double>242.8772003600253</double>
+        </void>
+       </void>
+      </object>
+      <double>319.3889603929564</double>
+     </void>
+    </void>
+   </object>
+  </void>
+  <void method="addNode">
+   <object class="com.horstmann.violet.InterfaceNode" id="InterfaceNode0">
+    <void property="methods">
+     <void property="text">
+      <string>buffer_type                   const &amp;getBuffer(void) const = 0;                                                                                                                                                                        
+method getMethod(void) const = 0;                                                                                                                                                                                    
+buffer_type const &amp;getURI(void) const = 0;                                                                                                                                                                           
+version getVersion(void) const = 0;                                                                                                                                                                                  
+buffer_type const &amp;getContent(void) const = 0;                                                                                                                                                                                 
+buffer_type getHeaderContent(buffer_type const &amp;header_name) = 0;                                                                                                                                                    
+std::list&lt;std::pair&lt;buffer_type, buffer_type&gt; &gt; getHeaders(void) const = 0;                                                                                                                                          
+std::list&lt;buffer_type&gt; getHeadersName(void) const = 0;                                                                                                                                                               
+std::list&lt;buffer_type&gt; getHeadersContent(void) const = 0;                                                                                                                                                            
+void setBuffer(buffer_type const &amp;buffer) = 0;                                                                                                                                                                       
+void setMethod(method new_method) = 0;                                                                                                                                                                               
+void setURI(buffer_type const &amp;new_uri) = 0;                                                                                                                                                                         
+void setVersion(version new_version) = 0;                                                                                                                                                                            
+void setContent(buffer_type const &amp;content) = 0;                                                                                                                                                                               
+void setHeaderContent(buffer_type const &amp;header_name,
+              buffer_type const &amp;content) = 0;                                                                                                                                                                       
+void addHeader(buffer_type const &amp;header_name,
+       buffer_type const &amp;content) = 0;                                                                                                                                                                              
+void removeHeader(buffer_type const &amp;header_name) = 0; </string>
+     </void>
+    </void>
+    <void property="name">
+     <void property="text">
+      <string>IRequest</string>
+     </void>
+    </void>
+   </object>
+   <object class="java.awt.geom.Point2D$Double" id="Point2D$Double3">
+    <void class="java.awt.geom.Point2D$Double" method="getField">
+     <string>x</string>
+     <void method="set">
+      <object idref="Point2D$Double3">
+       <void class="java.awt.geom.Point2D$Double" method="getField">
+        <string>y</string>
+        <void method="set">
+         <object idref="Point2D$Double3">
+          <void method="setLocation">
+           <double>518.1715728752538</double>
+           <double>375.90158697766475</double>
+          </void>
+         </object>
+         <double>375.90158697766475</double>
+        </void>
+       </void>
+      </object>
+      <double>518.1715728752538</double>
+     </void>
+    </void>
+   </object>
+  </void>
+  <void method="addNode">
+   <object class="com.horstmann.violet.InterfaceNode" id="InterfaceNode1">
+    <void property="methods">
+     <void property="text">
+      <string>const std::list&lt;const IModule *&gt; &amp; getModules()const = 0;                                                                                                                                                            
+const IModule *       loadModule(zia::filesystem::dll::AHandler *) = 0;                                                                                                                                              
+virtual const IModule *       unloadModule(const IModule *) = 0;                                                                                                                                                     
+const std::list&lt;const IModule *&gt; connectModules(const std::list&lt;IModule *&gt;&amp;) = 0;                                                                                                                                    
+bool isConnected(const IModule *) = 0;                                                                                                                                                                               
+const std::list&lt;const IModule *&gt; disconnectModules(const std::list&lt;IModule *&gt;&amp;) = 0;                                                                                                                                 
+bool useMethod(const zia::http::method&amp;) = 0;                                                                                                                                                                        
+bool execMethod(const zia::http::IRequest *) = 0;                                                                                                                                                                    
+const IRequest * getAnswer() = 0; </string>
+     </void>
+    </void>
+    <void property="name">
+     <void property="text">
+      <string>IModuleManager</string>
+     </void>
+    </void>
+   </object>
+   <object class="java.awt.geom.Point2D$Double" id="Point2D$Double4">
+    <void class="java.awt.geom.Point2D$Double" method="getField">
+     <string>x</string>
+     <void method="set">
+      <object idref="Point2D$Double4">
+       <void class="java.awt.geom.Point2D$Double" method="getField">
+        <string>y</string>
+        <void method="set">
+         <object idref="Point2D$Double4">
+          <void method="setLocation">
+           <double>30.304473782995387</double>
+           <double>34.08412767246227</double>
+          </void>
+         </object>
+         <double>34.08412767246227</double>
+        </void>
+       </void>
+      </object>
+      <double>30.304473782995387</double>
+     </void>
+    </void>
+   </object>
+  </void>
+  <void method="addNode">
+   <object class="com.horstmann.violet.InterfaceNode" id="InterfaceNode2">
+    <void property="methods">
+     <void property="text">
+      <string>void        load(zia::filesystem::dll::AHandler *) = 0;                                                                                                                                                              
+void        unload(void) = 0;                                                                                                                                                                                        
+bool        supportedMethod(const zia::http::method &amp;) = 0;                                                                                                                                                          
+bool        answer(const zia::http::method &amp;, zia::http::IRequest *) = 0;</string>
+     </void>
+    </void>
+    <void property="name">
+     <void property="text">
+      <string>IModule</string>
+     </void>
+    </void>
+   </object>
+   <object class="java.awt.geom.Point2D$Double" id="Point2D$Double5">
+    <void class="java.awt.geom.Point2D$Double" method="getField">
+     <string>x</string>
+     <void method="set">
+      <object idref="Point2D$Double5">
+       <void class="java.awt.geom.Point2D$Double" method="getField">
+        <string>y</string>
+        <void method="set">
+         <object idref="Point2D$Double5">
+          <void method="setLocation">
+           <double>857.6681810065353</double>
+           <double>207.346104343338</double>
+          </void>
+         </object>
+         <double>207.346104343338</double>
+        </void>
+       </void>
+      </object>
+      <double>857.6681810065353</double>
+     </void>
+    </void>
+   </object>
+  </void>
+  <void method="addNode">
+   <object class="com.horstmann.violet.ClassNode" id="ClassNode3">
+    <void property="methods">
+     <void property="text">
+      <string>bool                      operator==(const std::string &amp;) const;                                                                                                                                                     
+
+Node                      &amp;operator=(const Node &amp;);                                                                                                                                                                  
+Node                      &amp;operator=(const std::string &amp;);                                                                                                                                                           
+Node                      &amp;operator+=(const Node &amp;);                                                                                                                                                                 
+Node                      &amp;operator[](const std::string &amp;);                                                                                                                                                          
+const Node                &amp;operator[](const std::string &amp;) const;                                                                                                                                                    
+const std::string         &amp;getValue() const;                                                                                                                                                                         
+const std::string         &amp;getName() const;                                                                                                                                                                          
+bool                      has(const std::string &amp;) const;                                                                                                                                                            
+Node                      &amp;get(const std::string &amp;);                                                                                                                                                                 
+void                      dump(std::ostream &amp;, int depth = 0, int = 0) const; </string>
+     </void>
+    </void>
+    <void property="name">
+     <void property="text">
+      <string>Node</string>
+     </void>
+    </void>
+   </object>
+   <object class="java.awt.geom.Point2D$Double" id="Point2D$Double6">
+    <void class="java.awt.geom.Point2D$Double" method="getField">
+     <string>x</string>
+     <void method="set">
+      <object idref="Point2D$Double6">
+       <void class="java.awt.geom.Point2D$Double" method="getField">
+        <string>y</string>
+        <void method="set">
+         <object idref="Point2D$Double6">
+          <void method="setLocation">
+           <double>1055.2367235014585</double>
+           <double>384.7207793864213</double>
+          </void>
+         </object>
+         <double>384.7207793864213</double>
+        </void>
+       </void>
+      </object>
+      <double>1055.2367235014585</double>
+     </void>
+    </void>
+   </object>
+  </void>
+  <void method="addNode">
+   <object class="com.horstmann.violet.ClassNode" id="ClassNode4">
+    <void property="methods">
+     <void property="text">
+      <string>void setDefault(const Node *) = 0;                                                                                                                                                                                   
+void setDefault(const Node &amp;) = 0;                                                                                                                                                                                   
+Node&amp; getDefault() const = 0;                                                                                                                                                                                        
+void loadDefault() = 0;                                                                                                                                                                                              
+bool loadConfig(const std::string &amp;path) = 0;                                                                                                                                                                        
+bool loadConfig(const Node &amp;) = 0;                                                                                                                                                                                   
+bool loadConfig(const Node *) = 0;                                                                                                                                                                                   
+void saveConfig(Node *dst) const = 0;                                                                                                                                                                                
+void unloadConfig() = 0; </string>
+     </void>
+    </void>
+    <void property="name">
+     <void property="text">
+      <string>IConfiguration
+</string>
+     </void>
+    </void>
+   </object>
+   <object class="java.awt.geom.Point2D$Double" id="Point2D$Double7">
+    <void class="java.awt.geom.Point2D$Double" method="getField">
+     <string>x</string>
+     <void method="set">
+      <object idref="Point2D$Double7">
+       <void class="java.awt.geom.Point2D$Double" method="getField">
+        <string>y</string>
+        <void method="set">
+         <object idref="Point2D$Double7">
+          <void method="setLocation">
+           <double>1083.4347750354054</double>
+           <double>9.368398919924402</double>
+          </void>
+         </object>
+         <double>9.368398919924402</double>
+        </void>
+       </void>
+      </object>
+      <double>1083.4347750354054</double>
+     </void>
+    </void>
+   </object>
+  </void>
+  <void method="addNode">
+   <object class="com.horstmann.violet.ClassNode" id="ClassNode5">
+    <void property="name">
+     <void property="text">
+      <string>ZiaConfig</string>
+     </void>
+    </void>
+   </object>
+   <object class="java.awt.geom.Point2D$Double" id="Point2D$Double8">
+    <void class="java.awt.geom.Point2D$Double" method="getField">
+     <string>x</string>
+     <void method="set">
+      <object idref="Point2D$Double8">
+       <void class="java.awt.geom.Point2D$Double" method="getField">
+        <string>y</string>
+        <void method="set">
+         <object idref="Point2D$Double8">
+          <void method="setLocation">
+           <double>951.7657274770932</double>
+           <double>80.61017305526636</double>
+          </void>
+         </object>
+         <double>80.61017305526636</double>
+        </void>
+       </void>
+      </object>
+      <double>951.7657274770932</double>
+     </void>
+    </void>
+   </object>
+  </void>
+  <void method="addNode">
+   <object class="com.horstmann.violet.ClassNode" id="ClassNode6">
+    <void property="name">
+     <void property="text">
+      <string>ZiaModules</string>
+     </void>
+    </void>
+   </object>
+   <object class="java.awt.geom.Point2D$Double" id="Point2D$Double9">
+    <void class="java.awt.geom.Point2D$Double" method="getField">
+     <string>x</string>
+     <void method="set">
+      <object idref="Point2D$Double9">
+       <void class="java.awt.geom.Point2D$Double" method="getField">
+        <string>y</string>
+        <void method="set">
+         <object idref="Point2D$Double9">
+          <void method="setLocation">
+           <double>619.4255403194152</double>
+           <double>56.56854249492366</double>
+          </void>
+         </object>
+         <double>56.56854249492366</double>
+        </void>
+       </void>
+      </object>
+      <double>619.4255403194152</double>
+     </void>
+    </void>
+   </object>
+  </void>
+  <void method="addNode">
+   <object class="com.horstmann.violet.ClassNode" id="ClassNode7">
+    <void property="methods">
+     <void property="text">
+      <string>static AHandler *load(std::string const &amp;dl_name,
+eResType symbols_resolution = RES_LAZY);                                                                                                                           
+static void unload(AHandler*);</string>
+     </void>
+    </void>
+    <void property="name">
+     <void property="text">
+      <string>dll</string>
+     </void>
+    </void>
+   </object>
+   <object class="java.awt.geom.Point2D$Double" id="Point2D$Double10">
+    <void class="java.awt.geom.Point2D$Double" method="getField">
+     <string>x</string>
+     <void method="set">
+      <object idref="Point2D$Double10">
+       <void class="java.awt.geom.Point2D$Double" method="getField">
+        <string>y</string>
+        <void method="set">
+         <object idref="Point2D$Double10">
+          <void method="setLocation">
+           <double>63.63961030678928</double>
+           <double>386.080302527855</double>
+          </void>
+         </object>
+         <double>386.080302527855</double>
+        </void>
+       </void>
+      </object>
+      <double>63.63961030678928</double>
+     </void>
+    </void>
+   </object>
+  </void>
+  <void method="addNode">
+   <object class="com.horstmann.violet.ClassNode" id="ClassNode8">
+    <void property="methods">
+     <void property="text">
+      <string>void *getHandler() const = 0;                                                                                                                                                                                        
+std::string const &amp;getName() const = 0;                                                                                                                                                                              
+void *load(std::string const &amp;symbol_name) = 0;                                                                                                                                                                      
+template &lt;typename T&gt;
+std::function&lt;T&gt; load(std::string const &amp;symbol_name) {
+return std::function&lt;T&gt;(reinterpret_cast&lt;T*&gt;(load(symbol_name)));</string>
+     </void>
+    </void>
+    <void property="name">
+     <void property="text">
+      <string>AHandler</string>
+     </void>
+    </void>
+   </object>
+   <object class="java.awt.geom.Point2D$Double" id="Point2D$Double11">
+    <void class="java.awt.geom.Point2D$Double" method="getField">
+     <string>x</string>
+     <void method="set">
+      <object idref="Point2D$Double11">
+       <void class="java.awt.geom.Point2D$Double" method="getField">
+        <string>y</string>
+        <void method="set">
+         <object idref="Point2D$Double11">
+          <void method="setLocation">
+           <double>45.25483399593904</double>
+           <double>535.9869401394028</double>
+          </void>
+         </object>
+         <double>535.9869401394028</double>
+        </void>
+       </void>
+      </object>
+      <double>45.25483399593904</double>
+     </void>
+    </void>
+   </object>
+  </void>
+  <void method="connect">
+   <object class="com.horstmann.violet.ClassRelationshipEdge">
+    <void property="bentStyle">
+     <object class="com.horstmann.violet.BentStyle" field="HVH"/>
+    </void>
+    <void property="startArrowHead">
+     <object class="com.horstmann.violet.ArrowHead" field="BLACK_DIAMOND"/>
+    </void>
+   </object>
+   <object idref="ClassNode0"/>
+   <object idref="ClassNode1"/>
+  </void>
+  <void method="connect">
+   <object class="com.horstmann.violet.ClassRelationshipEdge">
+    <void property="bentStyle">
+     <object class="com.horstmann.violet.BentStyle" field="VHV"/>
+    </void>
+    <void property="endArrowHead">
+     <object class="com.horstmann.violet.ArrowHead" field="TRIANGLE"/>
+    </void>
+    <void property="lineStyle">
+     <object class="com.horstmann.violet.LineStyle" field="DOTTED"/>
+    </void>
+   </object>
+   <object idref="ClassNode1"/>
+   <object idref="ClassNode2"/>
+  </void>
+  <void method="connect">
+   <object class="com.horstmann.violet.ClassRelationshipEdge">
+    <void property="bentStyle">
+     <object class="com.horstmann.violet.BentStyle" field="HVH"/>
+    </void>
+    <void property="startArrowHead">
+     <object class="com.horstmann.violet.ArrowHead" field="BLACK_DIAMOND"/>
+    </void>
+   </object>
+   <object idref="ClassNode0"/>
+   <object idref="ClassNode6"/>
+  </void>
+  <void method="connect">
+   <object class="com.horstmann.violet.ClassRelationshipEdge">
+    <void property="bentStyle">
+     <object class="com.horstmann.violet.BentStyle" field="VHV"/>
+    </void>
+    <void property="endArrowHead">
+     <object class="com.horstmann.violet.ArrowHead" field="TRIANGLE"/>
+    </void>
+    <void property="lineStyle">
+     <object class="com.horstmann.violet.LineStyle" field="DOTTED"/>
+    </void>
+   </object>
+   <object idref="ClassNode6"/>
+   <object idref="InterfaceNode1"/>
+  </void>
+  <void method="connect">
+   <object class="com.horstmann.violet.ClassRelationshipEdge">
+    <void property="bentStyle">
+     <object class="com.horstmann.violet.BentStyle" field="HVH"/>
+    </void>
+    <void property="startArrowHead">
+     <object class="com.horstmann.violet.ArrowHead" field="BLACK_DIAMOND"/>
+    </void>
+   </object>
+   <object idref="ClassNode0"/>
+   <object idref="ClassNode5"/>
+  </void>
+  <void method="connect">
+   <object class="com.horstmann.violet.ClassRelationshipEdge">
+    <void property="bentStyle">
+     <object class="com.horstmann.violet.BentStyle" field="VHV"/>
+    </void>
+    <void property="endArrowHead">
+     <object class="com.horstmann.violet.ArrowHead" field="TRIANGLE"/>
+    </void>
+    <void property="lineStyle">
+     <object class="com.horstmann.violet.LineStyle" field="DOTTED"/>
+    </void>
+   </object>
+   <object idref="ClassNode5"/>
+   <object idref="ClassNode4"/>
+  </void>
+  <void method="connect">
+   <object class="com.horstmann.violet.ClassRelationshipEdge">
+    <void property="bentStyle">
+     <object class="com.horstmann.violet.BentStyle" field="HVH"/>
+    </void>
+    <void property="startArrowHead">
+     <object class="com.horstmann.violet.ArrowHead" field="BLACK_DIAMOND"/>
+    </void>
+   </object>
+   <object idref="ClassNode5"/>
+   <object idref="InterfaceNode2"/>
+  </void>
+  <void method="connect">
+   <object class="com.horstmann.violet.ClassRelationshipEdge">
+    <void property="bentStyle">
+     <object class="com.horstmann.violet.BentStyle" field="HVH"/>
+    </void>
+    <void property="startArrowHead">
+     <object class="com.horstmann.violet.ArrowHead" field="BLACK_DIAMOND"/>
+    </void>
+   </object>
+   <object idref="InterfaceNode0"/>
+   <object idref="ClassNode3"/>
+  </void>
+  <void method="connect">
+   <object class="com.horstmann.violet.ClassRelationshipEdge">
+    <void property="endArrowHead">
+     <object class="com.horstmann.violet.ArrowHead" field="V"/>
+    </void>
+    <void property="lineStyle">
+     <object class="com.horstmann.violet.LineStyle" field="DOTTED"/>
+    </void>
+   </object>
+   <object idref="ClassNode2"/>
+   <object idref="InterfaceNode0"/>
+  </void>
+  <void method="connect">
+   <object class="com.horstmann.violet.ClassRelationshipEdge">
+    <void property="bentStyle">
+     <object class="com.horstmann.violet.BentStyle" field="HVH"/>
+    </void>
+    <void property="startArrowHead">
+     <object class="com.horstmann.violet.ArrowHead" field="BLACK_DIAMOND"/>
+    </void>
+   </object>
+   <object idref="ClassNode7"/>
+   <object idref="ClassNode8"/>
+  </void>
+  <void method="connect">
+   <object class="com.horstmann.violet.NoteEdge"/>
+   <object idref="InterfaceNode1"/>
+   <object idref="ClassNode7"/>
+  </void>
+ </object>
+</java>
