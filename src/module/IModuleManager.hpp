@@ -13,34 +13,13 @@
 # include	"IRequest.hpp"
 # include	"IModule.hpp"
 
-// Where can i put these awesome functions in my project?
-
-// Zia {
-//   Initialisation/configuration/...
-//   IModuleManager->loadModule
-//   While (accept connections ; IModuleManager->connectModules) {
-//     Deserialise packet {
-//     treat packet {
-//     read paquet
-//     read header
-//     read content
-//     (do methode && IModuleManager->execMethod) || IModuleManager->useMethod
-//     answer = (forge answer || IModuleManager->getAnswer)
-//     IModuleManager->modifyAnswer(answer)
-//     send answer
-//    }
-//   disconnection && IModuleManager->disconnect
-//   }
-// }
-
-
 namespace zia {
 	class IModuleManager {
 	public:
 	  virtual ~IModuleManager() {}
 
 	  // Get the loaded modules list
-	  virtual const std::list<const IModule *> & getModules()const = 0;
+	  virtual const std::list<const IModule *> & getModules(void) const = 0;
 
 	  virtual const IModule *	loadModule(zia::filesystem::dll::AHandler *) = 0;
 	  virtual const IModule *	unloadModule(const IModule *) = 0;
