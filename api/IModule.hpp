@@ -12,26 +12,61 @@
 
 namespace zia {
   class		IModule  {
-  public :
 
+  public:
     virtual ~IModule() {}
 
-    /* Load a dynamic library corresponding to the module implementation :
-       see api/dll.hpp for further explanations about the AHandler type */
+    //		DYNAMIC LIBRARY FUNCTIONS		//
+
+    // Load a dynamic library corresponding to the module implementation :
+    // see api/dll.hpp for further explanations about the AHandler type
     virtual void	load(zia::filesystem::dll::AHandler *) = 0;
 
-    /* Unload the loaded dynamic library */
+    // Unload the loaded dynamic library
     virtual void	unload(void) = 0;
 
-    /* Return true if the method given as the 1st parameter is overloaded by the
-       module */
+    // Return true if the method given as the 1st parameter is overloaded by the
+    // module
     virtual bool	supportedMethod(const zia::http::method &) = 0;
 
-    /* The answer method takes a IRequest * as the second parameter, it will
-       include the answer provided by the module if necessary :
-       return true if modified else false */
-    virtual bool	answer(const zia::http::method &,
-			       zia::http::IRequest *) = 0;
+
+    //		MODULES INTERACTIONS STEP BY STEP		//
+
+    // Called when the module is loaded
+    // return true if the module must be used,
+    // false otherwise
+    virtual bool		onModuleLoad(void) = 0;
+    // Called when the module is unload
+    virtual void		onModuleUnLoad(void) = 0;
+    
+    // Called on a new connection from a client
+    virtual void		onConnection(IClient *) = 0;
+    // Called when a client disconnect
+    virtual void		onDisconnection(IClient *) = 0;
+    
+    // Called when the method must be executed
+    // return true if the module is executing this method all
+    // by itself (in this case, the core server must NOT execute
+    // anything else for this method), false otherwise
+    virtual bool		letMeDoThisMethod(const zia::http::method &) = 0;
+
+    // Called before the executin of the method
+    // execute something before the default behavior
+    virtual void		execBeforeMethod(const zia::http::method &,
+						 zia::http::IRequest *) = 0;
+
+    // Called after the execution of the method
+    // execute something after the default behavior
+    virtual void		execAfterMethod(const zia::http::method &,
+						zia::http::IRequest *) = 0;
+    
+    // Called when the answer is forge
+    // return a complete answer if the module is forging the
+    // answer all by itself, a NULL pointer otherwise
+    virtual const IRequest *	letMeDoTheAnswer(void) = 0;
+
+    // Called after the answer is forged and modify it or not
+    virtual void		modifyAnswer(IRequest *) = 0;
   };
 }
 
