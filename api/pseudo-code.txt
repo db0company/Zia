@@ -1,0 +1,34 @@
+
+
+Where can i put these awesome functions in my project?
+
+Zia {
+  Initialisation/configuration/...
+  IModule->onModuleLoad
+  While (accept connections ; IModule->onConnection) {
+    if (!IModule->letMeReadHeader) {
+        IModule->beforeReadHeader
+        read header
+	IModule->afterReadHeader
+     }
+    if (!IModule->letMeReadContent) {
+        IModule->beforeReadContent
+        read content
+	IModule->afterReadContent
+     }
+    if (!IModule->letMeDoThisMethod) {
+        IModule->execBeforeMethod
+	do the default behavior
+	IModule->execAfterMethod
+     }
+    if (!(answer = IModule->letMeDoTheAnswer)) {
+        answer = forge default answer
+        answer = IModule->modifyAnswer(answer)
+     }
+    send answer
+   }
+  disconnection && IModule->disconnect
+  }
+}
+
+
