@@ -25,6 +25,8 @@ namespace zia {
     // Unload the loaded dynamic library
     virtual void	unload(void) = 0;
 
+    //			TOOLS				//
+
     // Return true if the method given as the 1st parameter is overloaded by the
     // module
     virtual bool	supportedMethod(const zia::http::method &) = 0;
@@ -40,10 +42,13 @@ namespace zia {
     virtual void		onModuleUnLoad(void) = 0;
     
     // Called on a new connection from a client
-    virtual void		onConnection(IClient *) = 0;
+    virtual void		onClientConnection(IClient *) = 0;
     // Called when a client disconnect
-    virtual void		onDisconnection(IClient *) = 0;
-    
+    virtual void		onClientDisconnection(IClient *) = 0;
+
+    virtual void		letMeReadHeader(std::string const & data,
+						IClient *) = 0;
+
     // Called when the method must be executed
     // return true if the module is executing this method all
     // by itself (in this case, the core server must NOT execute
