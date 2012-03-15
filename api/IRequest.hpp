@@ -1,6 +1,7 @@
 /*
  * IRequest.hpp for zia
  * by lenorm_f
+ * modified by 
  */
 
 #ifndef __IREQUEST_H__
@@ -20,9 +21,8 @@
 
 namespace zia {
   namespace http {
-	template <typename T>
 	class IRequest {
-		typedef T buffer_type;
+		typedef std::string buffer_type;
 
 		public:
 		virtual ~IRequest() {}
@@ -37,7 +37,7 @@ namespace zia {
 		// Get the HTTP version of the request
 		virtual version getVersion() const = 0;
 		// Get the content of the packet
-		virtual T const &getContent() const = 0;
+		virtual buffer_type const &getContent() const = 0;
 
 		// Get a particular entity-body, associated with a header name
 		virtual buffer_type getHeaderContent(buffer_type const &header_name) = 0;
@@ -59,7 +59,7 @@ namespace zia {
 		// Set the version of the HTTP request
 		virtual void setVersion(version new_version) = 0;
 		// Set the content of the packet
-		virtual void setContent(T const &content) = 0;
+		virtual void setContent(buffer_type const &content) = 0;
 
 		// Modify the body of the request
 		virtual void setHeaderContent(buffer_type const &header_name,

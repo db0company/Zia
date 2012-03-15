@@ -1,6 +1,7 @@
 /*
  * IModule.h for zia
  * by becker_g
+ * modified by lepage_b
  */
 
 #ifndef		IMODULE_H__
@@ -46,8 +47,17 @@ namespace zia {
     // Called when a client disconnect
     virtual void		onClientDisconnection(IClient *) = 0;
 
-    virtual void		letMeReadHeader(std::string const & data,
-						IClient *) = 0;
+    // Called before the header is read (empty request)
+    virtual void		beforeReadHeader(zia::http::IRequest *) = 0;
+
+    // Called after the header is read (request is filled with header infos only)
+    virtual void		afterReadHeader(zia::http::IRequest *) = 0;
+
+    // Called before the content is read (request is filled with the header infos only)
+    virtual void		beforeReadContent(zia::http::IRequest *) = 0;
+
+    // Called before the content is read (request is filled with the header infos only)
+    virtual void		afterReadContent(zia::http::IRequest *) = 0;
 
     // Called when the method must be executed
     // return true if the module is executing this method all

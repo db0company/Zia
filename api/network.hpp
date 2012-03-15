@@ -1,3 +1,8 @@
+/*
+ * IModule.h for zia
+ * by lepage_b
+ * modified by 
+ */
 
 #ifndef		NETWORK_H_
 # define	NETWORK_H_
@@ -6,27 +11,13 @@ namespace zia {
   namespace network {
 
     class	IClient {
+      virtual ~IClient() {};
     };
 
-    class	ANetwork {
+    class	INetwork {
+      virtual ~INetwork() {};
 
-    protected:
-      std::list<IClient *>	clients;
-
-    protected:
-      void	(*onNewClient)(IClient *);
-      void	(*onClientLeave)(IClient *);
-      void	(*onClientRequest)(IClient *);
-
-    protected:
-      ANetwork(void (*onNewClient)(void) = 0,
-	       void (*onClientLeave)(void) = 0,
-	       void (*onClientRequest)(void) = 0)
-	: onNewClient(onNewClient),
-	  onClientLeave(onClientLeave),
-	  onClientRequest(onClientRequest) {
-      }
-
+     protected:
       // open server network
       // return false on failure, true otherwise
       virtual bool	openConnection(int port = 0) = 0;
@@ -37,6 +28,15 @@ namespace zia {
       // return true if the server is connected,
       // false otherwise
       virtual bool	isConnected(void) = 0;
+
+      // Called when a client connect to the server
+      virtual void	onNewClient(void) = 0;
+
+      // Called when a client disconnect
+      virtual void	onClientLeave(void) = 0;
+
+      // Called when a client has something to read
+      virtual void	onClientRequest(void) = 0;
     };
     
   }
