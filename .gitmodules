@@ -1,0 +1,3 @@
+[submodule "bref-api"]
+	path = bref-api
+	url = git@github.com:bref/bref-api.git
