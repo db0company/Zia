@@ -18,8 +18,16 @@ const BrefValue		&Configuration::findValue(const std::string &key) {
 }
 
 const BrefValue		&Configuration::findValue(const std::string &key) const {
-  if (_value.hasKey(key))
-    return _value[key];
+  if (_value.isArray() && _value.hasKey(key))
+    {
+      BrefValueArray datas = _value.asArray();
+
+      for (BrefValueArray::const_iterator it = datas.begin();
+	   it != datas.end();
+	   ++it)
+	if (it->first == key)
+	  return it->second;
+    }
 
   return VALUE_NOT_FOUND;
 }

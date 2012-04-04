@@ -5,6 +5,8 @@ using namespace bref;
 static const std::string	&INVALID_STRING_VALUE = "";
 static const int		INVALID_INT_VALUE = 42;
 static const bool		INVALID_BOOL_VALUE = false;
+static const BrefValueArray	INVALID_ARRAY_VALUE;
+static BrefValue		VALUE_NOT_FOUND = BrefValue();
 
 // Ctors/Dtors
 
@@ -51,27 +53,37 @@ bool			BrefValue::isBool() const {
   return (type_ == boolType);
 }
 
+bool			BrefValue::isArray() const {
+  return (type_ == arrayType);
+}
 // Getters
 
 const std::string	&BrefValue::asString() const {
-  if (type_ != stringType)
+  if (!isString())
     return INVALID_STRING_VALUE;
 
   return stringValue_;
 }
 
 int			BrefValue::asInt() const {
-  if (type_ != intType)
+  if (!isInt())
     return INVALID_INT_VALUE;
 
   return intValue_;
 }
 
 bool			BrefValue::asBool() const {
-  if (type_ != boolType)
+  if (!isBool())
     return INVALID_BOOL_VALUE;
 
   return boolValue_;
+}
+
+const BrefValueArray	&BrefValue::asArray() const {
+  if (!isArray())
+    return INVALID_ARRAY_VALUE;
+
+  return arrayValue_;
 }
 
 bool			BrefValue::hasKey(const std::string &key) const {
@@ -89,9 +101,10 @@ bool			BrefValue::hasKey(const std::string &key) const {
 
 BrefValue		&BrefValue::operator[](const std::string &key) {
   return arrayValue_[key];
+
   /*
   if (!hasKey(key))
-  return VALUE_NOT_FOUND;
+    return VALUE_NOT_FOUND;
 
   for (BrefValueArray::const_iterator it = arrayValue_.begin();
        it != arrayValue_.end();
@@ -99,7 +112,7 @@ BrefValue		&BrefValue::operator[](const std::string &key) {
     if (it->first == key)
       return it->second;
 
-return VALUE_NOT_FOUND;
+  return VALUE_NOT_FOUND;
   */
 }
 
