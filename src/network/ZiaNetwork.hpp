@@ -14,7 +14,7 @@
 #  include			"TCPServerSocketUnix.h"
 # endif
 
-class				ZiaNetwork : public zia::ANetwork
+class				ZiaNetwork : public zia::network::INetwork
 {
 
 /* ************************************************************************* */

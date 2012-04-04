@@ -8,7 +8,7 @@
 /* ************************************************************************* */
 
 ZiaNetwork::ZiaNetwork(void)
-  : ANetwork(), selector(), listener(), connection(false) {
+  : selector(), listener(), connection(false) {
 #ifndef WIN32
   this->selector = new Selector<int>;
   this->listener = new TCPServerSocketUnix(this->selector);
@@ -19,15 +19,15 @@ ZiaNetwork::ZiaNetwork(void)
 }
 
 ZiaNetwork::ZiaNetwork(ZiaNetwork const & other)
-  : ANetwork(other), selector(other.selector), listener(other.listener),
+  : selector(other.selector), listener(other.listener),
     connection(other.connection) {
 }
 
 ZiaNetwork &		ZiaNetwork::operator=(ZiaNetwork const & other) {
     if (&other != this) {
-      this->onNewClient = other.onNewClient;
-      this->onClientLeave = other.onClientLeave;
-      this->onClientRequest = other.onClientRequest;
+      //this->onNewClient = other.onNewClient;
+      //this->onClientLeave = other.onClientLeave;
+      //this->onClientRequest = other.onClientRequest;
 
       this->selector = other.selector;
       this->listener = other.listener;
@@ -41,8 +41,8 @@ ZiaNetwork &		ZiaNetwork::operator=(ZiaNetwork const & other) {
   return *this;
 }
 
-ZiaNetwork::~ZiaNetwork(void) {
-}
+//ZiaNetwork::~ZiaNetwork(void) {
+//}
 
 /* ************************************************************************* */
 /*                             Member Functions                              */
