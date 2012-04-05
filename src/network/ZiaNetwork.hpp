@@ -14,7 +14,7 @@
 #  include			"TCPServerSocketUnix.h"
 # endif
 
-class				ZiaNetwork : public zia::network::INetwork
+class				ZiaNetwork
 {
 
 /* ************************************************************************* */
@@ -42,6 +42,9 @@ class				ZiaNetwork : public zia::network::INetwork
   bool			openConnection(int port = CONF_DEFAULT_PORT);
   void			closeConnection(void);
   bool			isConnected(void);
+  void			onNewClient(void);
+  void			onClientLeave(void);
+  void			onClientRequest(void);
 
 /* ************************************************************************* */
 /*                           Private Tools                                   */

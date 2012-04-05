@@ -41,8 +41,8 @@ ZiaNetwork &		ZiaNetwork::operator=(ZiaNetwork const & other) {
   return *this;
 }
 
-//ZiaNetwork::~ZiaNetwork(void) {
-//}
+ZiaNetwork::~ZiaNetwork(void) {
+}
 
 /* ************************************************************************* */
 /*                             Member Functions                              */
@@ -69,6 +69,21 @@ void				ZiaNetwork::closeConnection(void) {
 
 bool				ZiaNetwork::isConnected(void) {
   return this->connection;
+}
+
+void				ZiaNetwork::onNewClient(void)
+{
+
+}
+
+void				ZiaNetwork::onClientLeave(void)
+{
+
+}
+
+void				ZiaNetwork::onClientRequest(void)
+{
+
 }
 
 /* ************************************************************************* */
@@ -122,8 +137,7 @@ bool				ZiaNetwork::readFromClient(ISocket * socket) {
 	return (this->delClient(socket));
       else
 	{
-	  if (this->onNewClient)
-	    this->onNewClient();
+	  this->onNewClient();
 	  std::cout << socket->getIp() << ": " << buff << std::endl;
 	}
     }
@@ -137,14 +151,12 @@ void				ZiaNetwork::addClient(ATCPClientSocket * socket) {
     }
   std::cout << "Info: Client "<< socket->getIp() << " added to list"  << std::endl;
   this->clients.push_front(socket);
-  if (this->onNewClient)
-    this->onNewClient();
+  this->onNewClient();
 }
 
 bool				ZiaNetwork::delClient(ISocket * socket)
 {
-  if (this->onClientLeave)
-    this->onClientLeave();
+  this->onClientLeave();
   std::cout << "Client leave..." << socket->getIp() << std::endl;
   this->clients.remove(socket);
   return (false);
