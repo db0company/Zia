@@ -9,7 +9,13 @@
 #include <HttpRequest.h>
 #include <HttpResponse.h>
 
-static std::string to_string(bref::Buffer buffer) {
+template <typename T>
+std::string to_string(T const&) {
+	return std::string();
+}
+
+template <>
+std::string to_string(bref::Buffer const &buffer) {
 	std::string s;
 
 	bref::Buffer::const_iterator it;
