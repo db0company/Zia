@@ -3,3 +3,6 @@
 *.o
 bin/zia
 *.a
+
+// It's up to you to update properly the submodule
+bref-api
