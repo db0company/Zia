@@ -3,46 +3,50 @@
  * by lenorm_f
  */
 
-// g++ -Wall -Wextra -I../../bref-api/include/bref test.cpp HttpRequest.cpp HttpResponse.cpp
+// g++ -Wall -Wextra -I../../bref-api/include/bref *.cpp ../config/BrefValue.cpp
 
 #include <iostream>
 #include <HttpRequest.h>
 #include <HttpResponse.h>
+#include "HttpResponseParser.hpp"
+#include "HttpUtils.hpp"
 
-template <typename T>
-std::string to_string(T const&) {
-	return std::string();
+// Important: call this function
+namespace http {
+	void init_literals();
 }
 
-template <>
-std::string to_string(bref::Buffer const &buffer) {
-	std::string s;
+std::ostream &operator<<(std::ostream &os, bref::HttpRequest const &req) {
+	os << "Request: " << static_cast<int>(req.getMethod())
+		<< " " << req.getUri()
+		<< " HTTP/" << req.getVersion().Major
+		<< "." << req.getVersion().Minor;
 
-	bref::Buffer::const_iterator it;
-	for (it = buffer.begin(); it != buffer.end(); ++it)
-		s += *it;
+	return os;
+}
 
-	return s;
+std::ostream &operator<<(std::ostream &os, bref::HttpResponse const &rep) {
+	os << "Response: " << http::util::to_string(rep.getRawData());
+
+	return os;
 }
 
 int main() {
 	bref::HttpRequest req;
 	bref::HttpResponse rep;
 
+	http::init_literals();
+
 	req.setVersion(bref::Version(1, 1));
 	req.setUri("/index.php");
 	req.setMethod(bref::request_methods::Get);
 
-	std::cout << "Request: " << static_cast<int>(req.getMethod())
-		<< " " << req.getUri()
-		<< " HTTP/" << req.getVersion().Major
-		<< "." << req.getVersion().Minor
-		<< std::endl;
-
 	rep.setVersion(bref::Version(1, 1));
 	rep.setStatus(bref::status_codes::OK);
 	rep.setReason("Oui.");
+	rep["Connection"] = bref::BrefValue(std::string("Close"));
+	rep["X-Powered-By"] = bref::BrefValue(std::string("Meow~"));
 
-	std::cout << "Response: " << to_string(rep.getRawData())
-		<< std::endl;
+	std::cout << req << std::endl
+		<< rep << std::endl;
 }

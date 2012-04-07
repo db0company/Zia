@@ -8,7 +8,7 @@
 namespace bref {
 // CTors/DTors
 HttpRequest::HttpRequest() {
-	method_ = request_methods::Get;
+	method_ = request_methods::UndefinedRequestMethod;
 }
 
 HttpRequest::~HttpRequest() {
