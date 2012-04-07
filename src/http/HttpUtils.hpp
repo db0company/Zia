@@ -30,6 +30,24 @@ static inline bref::Buffer to_buffer(std::string const &s) {
 
 	return buffer;
 }
+
+static inline void queue_to_buffer(bref::Buffer &b, std::string const &s) {
+	for (std::string::const_iterator it = s.begin();
+	     it != s.end();
+	     ++it)
+		b.push_back(*it);
+}
+
+static inline void queue_pair_to_buffer(bref::Buffer &b,
+					std::string const &sa,
+					std::string const &sb,
+					std::string const &sep = ": ") {
+	std::string s = sa;
+	s += sep;
+	s += sb;
+
+	queue_to_buffer(b, s);
+}
 }}
 
 #endif

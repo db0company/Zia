@@ -41,11 +41,21 @@ int main() {
 	req.setUri("/index.php");
 	req.setMethod(bref::request_methods::Get);
 
+	bref::BrefValueList vl{
+		std::string("meow~"),
+		std::string("qwerty"),
+	};
+	bref::BrefValueArray va{
+		{std::string("a"), std::string("1")},
+		{std::string("b"), std::string("2")},
+	};
+
 	rep.setVersion(bref::Version(1, 1));
 	rep.setStatus(bref::status_codes::OK);
 	rep.setReason("Oui.");
 	rep["Connection"] = bref::BrefValue(std::string("Close"));
-	rep["X-Powered-By"] = bref::BrefValue(std::string("Meow~"));
+	rep["X-Powered-By"] = vl;
+	rep["Random"] = va;
 
 	std::cout << req << std::endl
 		<< rep << std::endl;

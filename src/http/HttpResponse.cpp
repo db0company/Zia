@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <HttpResponse.h>
 #include "HttpLiterals.hpp"
+#include "HttpUtils.hpp"
 
 namespace bref {
 // CTors/DTors
@@ -42,13 +43,39 @@ Buffer HttpResponse::getRawData() const {
 		b.push_back(buffer[i]);
 	HttpResponse::const_iterator it = this->begin();
 	for (;it != this->end(); ++it) {
-		std::string s = it->first;
-		s += ": ";
-		s += it->second.asString();
-		for (std::string::const_iterator jt = s.begin(); jt != s.end(); ++jt)
-			b.push_back(*jt);
-		b.push_back('\r');
-		b.push_back('\n');
+		if (it->second.isString()) {
+			http::util::queue_pair_to_buffer(b,
+							 it->first,
+							 it->second.asString());
+		}
+		else if (it->second.isArray()) {
+			http::util::queue_pair_to_buffer(b,
+						    it->first,
+						    ": ", "");
+			bref::BrefValueArray const &a = it->second.asArray();
+			bref::BrefValueArray::const_iterator jt = a.begin();
+			for (; jt != a.end(); ++jt) {
+				if (jt != a.begin())
+					http::util::queue_to_buffer(b, "; ");
+				http::util::queue_pair_to_buffer(b,
+								 jt->first,
+								 jt->second.asString(),
+								 "=");
+			}
+		}
+		else if (it->second.isList()) {
+			http::util::queue_pair_to_buffer(b,
+						    it->first,
+						    ": ", "");
+			bref::BrefValueList const &l = it->second.asList();
+			bref::BrefValueList::const_iterator jt = l.begin();
+			for (; jt != l.end(); ++jt) {
+				if (jt != l.begin())
+					http::util::queue_to_buffer(b, "; ");
+				http::util::queue_to_buffer(b, jt->asString());
+			}
+		}
+		http::util::queue_to_buffer(b, "\r\n");
 	}
 
 	return b;
