@@ -5,6 +5,7 @@ using namespace bref;
 static const std::string	&INVALID_STRING_VALUE = "";
 static const int		INVALID_INT_VALUE = 42;
 static const bool		INVALID_BOOL_VALUE = false;
+static const BrefValueList	INVALID_LIST_VALUE;
 static const BrefValueArray	INVALID_ARRAY_VALUE;
 static BrefValue		VALUE_NOT_FOUND = BrefValue();
 
@@ -53,6 +54,10 @@ bool			BrefValue::isBool() const {
   return (type_ == boolType);
 }
 
+bool			BrefValue::isList() const {
+  return (type_ == listType);
+}
+
 bool			BrefValue::isArray() const {
   return (type_ == arrayType);
 }
@@ -77,6 +82,13 @@ bool			BrefValue::asBool() const {
     return INVALID_BOOL_VALUE;
 
   return boolValue_;
+}
+
+const BrefValueList	&BrefValue::asList() const {
+  if (!isList())
+    return INVALID_LIST_VALUE;
+
+  return listValue_;
 }
 
 const BrefValueArray	&BrefValue::asArray() const {
@@ -136,6 +148,12 @@ void			BrefValue::setInt(int value) {
 // Miscellaneous
 
 void			BrefValue::push(const BrefValue &node) {
+  if (type_ != listType) {
+    if (type_ != nullType)
+      listValue_.push_back(*this);
+    type_ = listType;
+  }
+
   listValue_.push_back(node);
 }
 
