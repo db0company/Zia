@@ -40,6 +40,18 @@ BrefValue::BrefValue(int value)
 {
 }
 
+BrefValue::BrefValue(const BrefValueList &vl)
+: type_(listType),
+  listValue_(vl)
+{
+}
+
+BrefValue::BrefValue(const BrefValueArray &va)
+: type_(arrayType),
+  arrayValue_(va)
+{
+}
+
 // Tests
 
 bool			BrefValue::isString() const {
