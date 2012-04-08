@@ -15,6 +15,10 @@ namespace http {
 struct error_codes {
 	static std::map<bref::status_codes::Type, std::string> literals;
 };
+
+struct request_methods {
+	static std::map<bref::request_methods::Type, std::string> literals;
+};
 }
 
 #endif

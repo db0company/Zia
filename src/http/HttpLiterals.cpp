@@ -7,6 +7,8 @@
 
 std::map<bref::status_codes::Type, std::string> http::error_codes::literals =
 std::map<bref::status_codes::Type, std::string>();
+std::map<bref::request_methods::Type, std::string> http::request_methods::literals =
+std::map<bref::request_methods::Type, std::string>();
 
 namespace http {
 static void init_error_codes(std::map<bref::status_codes::Type, std::string> &str_error_codes) {
@@ -52,7 +54,19 @@ static void init_error_codes(std::map<bref::status_codes::Type, std::string> &st
 	str_error_codes[bref::status_codes::HTTPVersionNotSupported] = "HTTP Version not supported";
 }
 
+static void init_request_methods(std::map<bref::request_methods::Type, std::string> &str_request_methods) {
+	str_request_methods[bref::request_methods::Options] = "OPTIONS";
+	str_request_methods[bref::request_methods::Get] = "GET";
+	str_request_methods[bref::request_methods::Head] = "HEAD";
+	str_request_methods[bref::request_methods::Post] = "POST";
+	str_request_methods[bref::request_methods::Put] = "PUT";
+	str_request_methods[bref::request_methods::Delete] = "DELETE";
+	str_request_methods[bref::request_methods::Trace] = "TRACE";
+	str_request_methods[bref::request_methods::Connect] = "CONNECT";
+}
+
 void init_literals() {
 	init_error_codes(error_codes::literals);
+	init_request_methods(request_methods::literals);
 }
 }
