@@ -3,7 +3,7 @@
  * by lenorm_f
  */
 
-// g++ -Wall -Wextra -I../../bref-api/include/bref *.cpp ../config/BrefValue.cpp
+// g++ -std=c++0x -Wall -Wextra -I../../bref-api/include/bref *.cpp ../config/BrefValue.cpp
 
 #include <iostream>
 #include <HttpRequest.h>
@@ -34,6 +34,7 @@ std::ostream &operator<<(std::ostream &os, bref::HttpResponse const &rep) {
 int main() {
 	bref::HttpRequest req;
 	bref::HttpResponse rep;
+	http::HttpResponseParser repp;
 
 	http::init_literals();
 
@@ -59,4 +60,6 @@ int main() {
 
 	std::cout << req << std::endl
 		<< rep << std::endl;
+
+	std::cout << repp.forge(rep.getRawData()) << std::endl;
 }

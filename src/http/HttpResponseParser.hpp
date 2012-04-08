@@ -11,7 +11,14 @@
 #include "HttpParser.hpp"
 
 namespace http {
-struct HttpResponseParser : public HttpParser {
+class HttpResponseParser : public HttpParser {
+	void _parse_tokens(bref::HttpResponse&);
+
+	public:
+	HttpResponseParser();
+	~HttpResponseParser();
+
+	bref::HttpResponse forge(bref::Buffer const&);
 	bref::HttpResponse forge(std::string const&);
 };
 }
