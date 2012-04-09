@@ -8,8 +8,17 @@
 #include <iostream>
 #include <HttpRequest.h>
 #include <HttpResponse.h>
-#include "HttpResponseParser.hpp"
+#include "HttpRequestParser.hpp"
+#include "HttpLiterals.hpp"
 #include "HttpUtils.hpp"
+
+#define TEST_REQUEST ("GET / HTTP/1.1\r\n" \
+		      "User-Agent: Opera/9.80 (X11; Linux x86_64; U; en) Presto/2.10.229 Version/11.62\r\n" \
+		      "Host: localhost:8080\r\n" \
+		      "Accept: text/html, application/xml;q=0.9, application/xhtml+xml, image/png, image/webp, image/jpeg, image/gif, image/x-xbitmap, */*;q=0.1\r\n" \
+		      "Accept-Language: en-US,en;q=0.9\r\n" \
+		      "Accept-Encoding: gzip, deflate\r\n" \
+		      "Connection: Keep-Alive\r\n")
 
 // Important: call this function
 namespace http {
@@ -17,7 +26,7 @@ namespace http {
 }
 
 std::ostream &operator<<(std::ostream &os, bref::HttpRequest const &req) {
-	os << "Request: " << static_cast<int>(req.getMethod())
+	os << "Request: " << http::request_methods::literals[req.getMethod()]
 		<< " " << req.getUri()
 		<< " HTTP/" << req.getVersion().Major
 		<< "." << req.getVersion().Minor;
@@ -34,7 +43,7 @@ std::ostream &operator<<(std::ostream &os, bref::HttpResponse const &rep) {
 int main() {
 	bref::HttpRequest req;
 	bref::HttpResponse rep;
-	http::HttpResponseParser repp;
+	http::HttpRequestParser reqp;
 
 	http::init_literals();
 
@@ -61,5 +70,5 @@ int main() {
 	std::cout << req << std::endl
 		<< rep << std::endl;
 
-	std::cout << repp.forge(rep.getRawData()) << std::endl;
+	std::cout << reqp.forge(TEST_REQUEST) << std::endl;
 }

@@ -1,12 +1,13 @@
 /*
- * HttpResponseParser.cpp for Zia
+ * HttpRequestParser.cpp for Zia
  * by lenorm_f
  */
 
-#include <cstring>
-#include "HttpResponseParser.hpp"
+#include "HttpRequestParser.hpp"
 #include "HttpLiterals.hpp"
 #include "HttpUtils.hpp"
+
+#include <iostream>
 
 static inline std::pair<std::string, std::string> split_on(std::string const &s, char c) {
 	std::string s1;
@@ -29,26 +30,26 @@ static inline std::pair<std::string, std::string> split_on(std::string const &s,
 
 namespace http {
 // Ctors/DTors
-HttpResponseParser::HttpResponseParser() : HttpParser() {
+HttpRequestParser::HttpRequestParser() : HttpParser() {
 }
 
-HttpResponseParser::~HttpResponseParser() {
+HttpRequestParser::~HttpRequestParser() {
 }
 
 // Private Functions
-void HttpResponseParser::_assign_fields(bref::HttpResponse &resp,
+void HttpRequestParser::_assign_fields(bref::HttpRequest &req,
 					std::string const &name,
 					std::vector<std::string> &fields) {
 	if (fields.empty())
 		return;
 
-	bool hc = ::strchr(fields[0].c_str(), '=') != 0;
-	bool hl = !hc && (::strchr(fields[0].c_str(), ';') != 0
+	bool hc = fields[0].find('=') != std::string::npos;
+	bool hl = !hc && (fields[0].find(';') != std::string::npos
 			  || (fields.size() > 1
-			      && ::strchr(fields[1].c_str(), ';') != 0));
+			      && fields[1].find(';') != std::string::npos));
 
 	if (fields.size() == 1 && !hc) {
-		resp[name] = bref::BrefValue(fields[0]);
+		req[name] = bref::BrefValue(fields[0]);
 	}
 	else if (hc) {
 		bref::BrefValueArray a;
@@ -59,7 +60,7 @@ void HttpResponseParser::_assign_fields(bref::HttpResponse &resp,
 				p.second = p.second.substr(0, p.second.length() - 1);
 			a[p.first] = p.second;
 		}
-		resp[name] = a;
+		req[name] = a;
 	}
 	else if (hl) {
 		bref::BrefValueList l;
@@ -70,13 +71,13 @@ void HttpResponseParser::_assign_fields(bref::HttpResponse &resp,
 				ss = ss.substr(0, ss.length() - 1);
 			l.push_back(ss);
 		}
-		resp[name] = l;
+		req[name] = l;
 	}
 
 	fields.clear();
 }
 
-void HttpResponseParser::_parse_field(bref::HttpResponse &resp,
+void HttpRequestParser::_parse_field(bref::HttpRequest &req,
 				      std::string const &s,
 				      std::vector<bref::Buffer>::const_iterator &it,
 				      std::vector<bref::Buffer>::const_iterator const &it_end) {
@@ -88,32 +89,38 @@ void HttpResponseParser::_parse_field(bref::HttpResponse &resp,
 		if (ss.empty())
 			continue;
 		if (ss[ss.length() - 1] == ':') {
-			_assign_fields(resp, s, _fields);
-			return _parse_field(resp, ss.substr(0, ss.length() - 1), ++it, it_end);
+			_assign_fields(req, s, _fields);
+			return _parse_field(req, ss.substr(0, ss.length() - 1), ++it, it_end);
 		}
 		else {
 			_fields.push_back(ss);
 		}
 	}
-	_assign_fields(resp, s, _fields);
+	_assign_fields(req, s, _fields);
 }
 
-void HttpResponseParser::_parse_tokens(bref::HttpResponse &resp) {
+void HttpRequestParser::_parse_tokens(bref::HttpRequest &req) {
 	std::vector<bref::Buffer>::const_iterator it = _tokens.begin();
 	std::vector<bref::Buffer>::const_iterator it_end = _tokens.end();
 	for (; it != it_end; ++it) {
 		std::string const s = util::to_string(*it);
-		bref::status_codes::Type const sc = status_codes::of_string(s);
 
-		if (resp.getVersion().Major == 0
-		    && !::strncmp(s.c_str(), "HTTP/1.", 7))
-			resp.setVersion(bref::Version(1, static_cast<int>(s[7] - 48)));
-		else if (resp.getStatus() == bref::status_codes::UndefinedStatusCode
-			 && sc != bref::status_codes::UndefinedStatusCode)
-			resp.setStatus(sc);
+		bool const hv = req.getVersion().Major == 1;
+		bref::request_methods::Type const rm = request_methods::of_string(s);
+		bool const hm = req.getMethod() != bref::request_methods::UndefinedRequestMethod;
+
+		if (!hm
+		    && rm != bref::request_methods::UndefinedRequestMethod)
+			req.setMethod(rm);
+		else if (!hv && hm
+			 && req.getUri().empty())
+			req.setUri(s);
+		else if (!hv
+			 && s.substr(0, 7) == "HTTP/1.")
+			req.setVersion(bref::Version(1, static_cast<int>(s[7] - 48)));
 		else if (s.length() > 1
 			 && s[s.length() - 1] == ':') {
-			_parse_field(resp, s.substr(0, s.length() - 1), ++it, it_end);
+			_parse_field(req, s.substr(0, s.length() - 1), ++it, it_end);
 			if (it == it_end)
 				break;
 		}
@@ -121,8 +128,8 @@ void HttpResponseParser::_parse_tokens(bref::HttpResponse &resp) {
 }
 
 // Public Functions
-bref::HttpResponse HttpResponseParser::forge(bref::Buffer const &buffer) {
-	bref::HttpResponse resp;
+bref::HttpRequest HttpRequestParser::forge(bref::Buffer const &buffer) {
+	bref::HttpRequest req;
 
 	bool done = false;
 	bref::Buffer::const_iterator it = buffer.begin();
@@ -131,7 +138,7 @@ bref::HttpResponse HttpResponseParser::forge(bref::Buffer const &buffer) {
 		eState state = HttpParser::parse(it, it_end);
 		switch (state) {
 			case FEED_ME:
-				_parse_tokens(resp);
+				_parse_tokens(req);
 				_tokens.clear();
 				_token.clear();
 				break;
@@ -140,10 +147,10 @@ bref::HttpResponse HttpResponseParser::forge(bref::Buffer const &buffer) {
 		}
 	}
 
-	return resp;
+	return req;
 }
 
-bref::HttpResponse HttpResponseParser::forge(std::string const &b) {
+bref::HttpRequest HttpRequestParser::forge(std::string const &b) {
 	return forge(util::to_buffer(b));
 }
 }
