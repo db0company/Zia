@@ -12,12 +12,14 @@
 #include <HttpConstants.h>
 
 namespace http {
-struct error_codes {
+struct status_codes {
 	static std::map<bref::status_codes::Type, std::string> literals;
+	static bref::status_codes::Type of_string(std::string const&);
 };
 
 struct request_methods {
 	static std::map<bref::request_methods::Type, std::string> literals;
+	static bref::request_methods::Type of_string(std::string const&);
 };
 }
 

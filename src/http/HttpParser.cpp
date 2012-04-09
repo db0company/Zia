@@ -19,7 +19,7 @@ HttpParser::~HttpParser() {
 
 // Private Functions
 bool HttpParser::it_cmp(bref::Buffer::const_iterator it,
-			bref::Buffer::const_iterator &it_end,
+			bref::Buffer::const_iterator const &it_end,
 			bref::Buffer const &buffer) const {
 	bref::Buffer::const_iterator i = buffer.begin();
 	for (; i != buffer.end(); ++it, ++i)
@@ -30,7 +30,8 @@ bool HttpParser::it_cmp(bref::Buffer::const_iterator it,
 	return (i == buffer.end());
 }
 
-HttpParser::token_type HttpParser::consume(bref::Buffer::const_iterator &it, unsigned int n) {
+HttpParser::token_type HttpParser::consume(bref::Buffer::const_iterator &it,
+					   unsigned int n) {
 	HttpParser::token_type c;
 
 	for (unsigned int i = 0; i < n; ++i) {
@@ -44,7 +45,7 @@ HttpParser::token_type HttpParser::consume(bref::Buffer::const_iterator &it, uns
 
 // Protected Functions
 bool HttpParser::spc(bref::Buffer::const_iterator &it,
-		     bref:: Buffer::const_iterator &it_end) const {
+		     bref:: Buffer::const_iterator const &it_end) const {
 	if (it == it_end
 	    || !IS_SPC(*it))
 		return false;
@@ -55,32 +56,28 @@ bool HttpParser::spc(bref::Buffer::const_iterator &it,
 }
 
 bool HttpParser::eol(bref::Buffer::const_iterator &it,
-		     bref::Buffer::const_iterator &it_end) const {
+		     bref::Buffer::const_iterator const &it_end) const {
 	bref::Buffer buffer = util::to_buffer(EOL); 
 	bool cmp = it_cmp(it, it_end, buffer);
 
 	if (cmp)
 		it += buffer.size();
 
-	return (it != it_end
-		&& cmp);
+	return cmp;
 }
 
 // Public Functions
 HttpParser::eState HttpParser::parse(bref::Buffer::const_iterator &it,
-				     bref::Buffer::const_iterator &it_end) {
+				     bref::Buffer::const_iterator const &it_end) {
 	HttpParser::token_type c;
 	while (it != it_end) {
-		if (*it == '\r') {// FIXME: eol
-			it += 2;
+		if (eol(it, it_end)) {
+			_tokens.push_back(_token);
+			_token.clear();
 			return FEED_ME;
 		}
-
-		if (!spc(it, it_end)) {
+		else if (!spc(it, it_end)) {
 			c = consume(it);
-		}
-		else if (eol(it, it_end)) {
-			return FEED_ME;
 		}
 		else {
 			_tokens.push_back(_token);

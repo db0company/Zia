@@ -12,9 +12,10 @@
 namespace http {
 class HttpParser {
 	bool it_cmp(bref::Buffer::const_iterator,
-		    bref::Buffer::const_iterator&,
+		    bref::Buffer::const_iterator const&,
 		    bref::Buffer const&) const;
-	bref::Buffer::const_iterator::value_type consume(bref::Buffer::const_iterator&, unsigned int = 1);
+	bref::Buffer::const_iterator::value_type consume(bref::Buffer::const_iterator&,
+							 unsigned int = 1);
 
 	protected:
 	bref::Buffer _token;
@@ -22,9 +23,9 @@ class HttpParser {
 	typedef bref::Buffer::const_iterator::value_type token_type;
 
 	bool spc(bref::Buffer::const_iterator&,
-		 bref::Buffer::const_iterator&) const;
+		 bref::Buffer::const_iterator const&) const;
 	bool eol(bref::Buffer::const_iterator&,
-		 bref::Buffer::const_iterator&) const;
+		 bref::Buffer::const_iterator const&) const;
 
 	public:
 	enum eState {
@@ -39,7 +40,7 @@ class HttpParser {
 
 	void feed(bref::Buffer const&);
 	eState parse(bref::Buffer::const_iterator&,
-		     bref::Buffer::const_iterator&);
+		     bref::Buffer::const_iterator const&);
 };
 }
 

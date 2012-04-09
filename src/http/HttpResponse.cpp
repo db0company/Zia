@@ -38,7 +38,7 @@ Buffer HttpResponse::getRawData() const {
 		   "HTTP/%d.%d %d %s\r\n",
 		   version_.Major, version_.Minor,
 		   statusCode_,
-		   http::error_codes::literals[statusCode_].c_str());
+		   http::status_codes::literals[statusCode_].c_str());
 	for (unsigned int i = 0; i < sizeof(buffer) && buffer[i]; ++i)
 		b.push_back(buffer[i]);
 	HttpResponse::const_iterator it = this->begin();
