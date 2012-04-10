@@ -207,7 +207,7 @@ char *TCPClientSocketWindows::getIp(void) const
 {
   char *str = new char[50];
 
-  InetNtop(AF_INET, (void *)&(this->_addr.sin_addr), reinterpret_cast<PSTR>(str), 49);
+  InetNtop(AF_INET, (void *)&(this->_addr.sin_addr), reinterpret_cast<PWSTR>(str), 49);
 	//  inet_ntop(AF_INET, &(this->_addr.sin_addr), str, 49);
   return (str);
 }

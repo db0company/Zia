@@ -45,6 +45,8 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(ProjectDir)Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SNetworkLib.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -61,15 +63,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\network\network.hpp" />
+    <ClInclude Include="src\network\ZiaNetwork.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="lib\SNetwork\SNetworkLib.vcxproj">
+      <Project>{43ebf388-184a-4ce1-9815-c654f699fa62}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
     <ClCompile Include="src\network\ZiaNetwork.cpp" />
     <ClCompile Include="src\zia\main.cpp" />
     <ClCompile Include="src\zia\Zia.cpp" />
     <ClCompile Include="src\zia\zia_main.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="src\network\network.hpp" />
-    <ClInclude Include="src\network\ZiaNetwork.hpp" />
-    <ClInclude Include="src\zia\Zia.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

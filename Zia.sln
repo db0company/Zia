@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Zia", "Zia.vcxproj", "{515FB06A-89E5-436F-A5EB-97F1809F8835}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SNetworkLib", "lib\SNetwork\SNetworkLib.vcxproj", "{43EBF388-184A-4CE1-9815-C654F699FA62}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -13,6 +15,10 @@ Global
 		{515FB06A-89E5-436F-A5EB-97F1809F8835}.Debug|Win32.Build.0 = Debug|Win32
 		{515FB06A-89E5-436F-A5EB-97F1809F8835}.Release|Win32.ActiveCfg = Release|Win32
 		{515FB06A-89E5-436F-A5EB-97F1809F8835}.Release|Win32.Build.0 = Release|Win32
+		{43EBF388-184A-4CE1-9815-C654F699FA62}.Debug|Win32.ActiveCfg = Debug|Win32
+		{43EBF388-184A-4CE1-9815-C654F699FA62}.Debug|Win32.Build.0 = Debug|Win32
+		{43EBF388-184A-4CE1-9815-C654F699FA62}.Release|Win32.ActiveCfg = Release|Win32
+		{43EBF388-184A-4CE1-9815-C654F699FA62}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

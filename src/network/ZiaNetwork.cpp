@@ -95,10 +95,10 @@ void				ZiaNetwork::run(void) {
 
   while (true) {
       this->listener->SNAddRead();
-      if (!this->selector->SNSelect()) {
-	  std::cerr << "Error: Select" << std::endl;
-          return ;
-        }
+   //   if (!this->selector->SNSelect()) {
+	  //std::cerr << "Error: Select" << std::endl;
+   //       return ;
+   //     }
       this->getNewClient();
       this->readFromClients();
     }
@@ -125,8 +125,6 @@ void				ZiaNetwork::readFromClients(void) {
   for (it = this->clients.begin(); it != this->clients.end(); ++it)
     if (!(this->readFromClient(*it)))
       it = this->clients.begin();
-  //  for_each(this->clients.begin(), this->clients.end(), bind(&ZiaNetwork::readFromClient, _1));
-
 }
 
 bool				ZiaNetwork::readFromClient(ISocket * socket) {

@@ -6,7 +6,7 @@
 # include			<algorithm>
 
 # include			"conf.h"
-# include			"network.hpp"
+//# include			"network.hpp"
 
 # ifdef _WIN32
 #  include			"TCPServerSocketWindows.h"

@@ -124,7 +124,7 @@ int				UDPServerSocketWindows::SNReadClient(char *msg, unsigned int size, std::s
 		return (-1);
 	}
 	this->_error = NOERRORSOCKET;
-	InetNtop(AF_INET, (void *)&(this->_daddr.sin_addr), reinterpret_cast<PSTR>(str), 49);
+	InetNtop(AF_INET, (void *)&(this->_daddr.sin_addr), reinterpret_cast<PWSTR>(str), 49);
 	ip = str;
 	return (BytesReceived);
 }
