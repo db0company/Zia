@@ -88,7 +88,7 @@ void HttpRequestParser::_parse_field(bref::HttpRequest &req,
 
 		if (ss.empty())
 			continue;
-		if (ss[ss.length() - 1] == ':') {
+		if (0 && ss[ss.length() - 1] == ':') { // RM
 			_assign_fields(req, s, _fields);
 			return _parse_field(req, ss.substr(0, ss.length() - 1), ++it, it_end);
 		}
