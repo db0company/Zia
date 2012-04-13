@@ -53,6 +53,9 @@ BrefValue::BrefValue(const BrefValueArray &va)
 }
 
 // Tests
+BrefValue::confType BrefValue::getType() const {
+	return type_;
+}
 
 bool			BrefValue::isString() const {
   return (type_ == stringType);
