@@ -1,0 +1,17 @@
+- name: RootSection
+  value:
+    - name: DocumentRoot
+      value: /var/www
+    - name: ServerName
+      value: Zia-Meow~
+
+- name: VirtualHosts
+  value:
+    - name: www.example.fr
+      value: 
+        - name: DocumentRoot
+          value: /vhosts/fr/
+    - name: www.example.com
+      value: 
+        - name: DocumentRoot
+          value: /vhosts/com/
