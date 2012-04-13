@@ -50,14 +50,17 @@ ZiaNetwork::~ZiaNetwork(void) {
 
 bool				ZiaNetwork::openConnection(int port) {
   if (!(this->listener->SNCreate(SERV_ADDR, port))) {
+    if (v)
       std::cerr << "Error: Can't Create Listener Socket on port " << port << std::endl;
-      return false;
-    }
-  std::cout << "Server Listening on port " << port << std::endl;
+    return false;
+  }
+  if (v)
+    std::cout << "Server Listening on port " << port << std::endl;
   if (!this->listener->SNListen()) {
+    if (v)
       std::cerr << "Error: Can't listen on socket" << std::endl;
-      return false;
-    }
+    return false;
+  }
   this->listener->SNAddRead();
   this->run();
   return true;
@@ -71,19 +74,18 @@ bool				ZiaNetwork::isConnected(void) {
   return this->connection;
 }
 
-void				ZiaNetwork::onNewClient(void)
-{
+void				ZiaNetwork::onNewClient(void) {
 
 }
 
-void				ZiaNetwork::onClientLeave(void)
-{
+void				ZiaNetwork::onClientLeave(void) {
 
 }
 
-void				ZiaNetwork::onClientRequest(void)
-{
-
+void				ZiaNetwork::onClientRequest(ISocket * client,
+							    std::string const & request) {
+  if (v)
+    std::cout << client->getIp() << ": " << request << std::endl;
 }
 
 /* ************************************************************************* */
@@ -95,13 +97,14 @@ void				ZiaNetwork::run(void) {
 
   while (true) {
       this->listener->SNAddRead();
-   //   if (!this->selector->SNSelect()) {
-	  //std::cerr << "Error: Select" << std::endl;
-   //       return ;
-   //     }
-      this->getNewClient();
-      this->readFromClients();
-    }
+     if (!this->selector->SNSelect()) {
+       if (v)
+	 std::cerr << "Error: Select" << std::endl;
+       return ;
+     }
+     this->getNewClient();
+     this->readFromClients();
+  }
 }
 
 void				ZiaNetwork::getNewClient(void) {
@@ -111,10 +114,12 @@ void				ZiaNetwork::getNewClient(void) {
 	return ;
       newClient->SNAddRead();
       newClient->SNAddWrite();
-      std::cout << "New connection";
-      if (newClient->getIp())
+      if (v)
+	std::cout << "New connection";
+      if (v && newClient->getIp())
 	std::cout << " from " << newClient->getIp();
-      std::cout << std::endl;
+      if (v)
+	std::cout << std::endl;
       this->addClient(newClient);
     }
 }
@@ -130,13 +135,14 @@ void				ZiaNetwork::readFromClients(void) {
 bool				ZiaNetwork::readFromClient(ISocket * socket) {
   if (socket && socket->SNGetRead() == true)
     {
-      char           buff[512] = {0};
-      if (socket->SNRead(buff, 514) <= 0)
+      char           buff[4096] = {0};
+      int	     red = 0;
+      if ((red = socket->SNRead(buff, 4095)) <= 0)
 	return (this->delClient(socket));
       else
 	{
-	  this->onNewClient();
-	  std::cout << socket->getIp() << ": " << buff << std::endl;
+	  buff[red + 1] = '\0';
+	  this->onClientRequest(socket, buff);
 	}
     }
   return (true);
@@ -144,18 +150,20 @@ bool				ZiaNetwork::readFromClient(ISocket * socket) {
 
 void				ZiaNetwork::addClient(ATCPClientSocket * socket) {
   if (!socket->getIp()) {
+    if (v)
       std::cerr << "Error: Can't resolve client ip adress" << std::endl;
-      return ;
-    }
-  std::cout << "Info: Client "<< socket->getIp() << " added to list"  << std::endl;
+    return ;
+  }
+  if (v)
+    std::cout << "Info: Client "<< socket->getIp() << " added to list"  << std::endl;
   this->clients.push_front(socket);
   this->onNewClient();
 }
 
-bool				ZiaNetwork::delClient(ISocket * socket)
-{
+bool				ZiaNetwork::delClient(ISocket * socket) {
   this->onClientLeave();
-  std::cout << "Client leave..." << socket->getIp() << std::endl;
+  if (v)
+    std::cout << "Client leave..." << socket->getIp() << std::endl;
   this->clients.remove(socket);
   return (false);
 }

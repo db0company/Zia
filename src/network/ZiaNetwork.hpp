@@ -5,8 +5,8 @@
 # include			<list>
 # include			<algorithm>
 
+# include			"v.h"
 # include			"conf.h"
-//# include			"network.hpp"
 
 # ifdef _WIN32
 #  include			"TCPServerSocketWindows.h"
@@ -44,7 +44,7 @@ class				ZiaNetwork
   bool			isConnected(void);
   void			onNewClient(void);
   void			onClientLeave(void);
-  void			onClientRequest(void);
+  void			onClientRequest(ISocket *, std::string const &);
 
 /* ************************************************************************* */
 /*                           Private Tools                                   */
