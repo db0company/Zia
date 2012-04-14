@@ -8,25 +8,22 @@
 class ModHelloWorld : public bref::AModule
 {
 private:
-  static const float       ModulePriority;
+	static const float       ModulePriority;
 
 public:
-  ModHelloWorld();
-  virtual ~ModHelloWorld();
-  virtual void dispose();
-  virtual void registerHooks(bref::Pipeline & pipeline);
+	ModHelloWorld();
+	virtual ~ModHelloWorld();
+	virtual void dispose();
+	virtual void registerHooks(bref::Pipeline & pipeline);
 };
 
-/*
-  Request handler for the ModHello module.
-*/
 struct ModHelloWorldRequestHandler : public bref::Pipeline::IContentRequestHandler
 {
-  ModHelloWorldRequestHandler();
-  virtual ~ModHelloWorldRequestHandler();
-  virtual bool inContent(bref::HttpResponse &, const bref::Buffer &);
-  virtual bool outContent(bref::HttpResponse &, bref::Buffer &);
-  virtual void dispose();
+	ModHelloWorldRequestHandler();
+	virtual ~ModHelloWorldRequestHandler();
+	virtual bool inContent(bref::HttpResponse &, const bref::Buffer &);
+	virtual bool outContent(bref::HttpResponse &, bref::Buffer &);
+	virtual void dispose();
 };
 
 #endif

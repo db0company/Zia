@@ -11,12 +11,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{515FB06A-89E5-436F-A5EB-97F1809F8835}</ProjectGuid>
-    <RootNamespace>Zia</RootNamespace>
+    <ProjectGuid>{52B867F7-9E56-42B2-AA6B-1CA46DF9B1FB}</ProjectGuid>
+    <RootNamespace>PhpCgiMod</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
@@ -41,12 +41,12 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(ProjectDir)bref-api\include\bref;$(ProjectDir)src\network;$(ProjectDir)lib\SNetwork\include;$(ProjectDir)src;$(ProjectDir)include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)bref-api\include\bref</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(ProjectDir)$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SNetworkLib.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)$(Configuration)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libBref.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -63,19 +63,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\network\network.hpp" />
-    <ClInclude Include="src\network\ZiaNetwork.hpp" />
+    <ClInclude Include="ModPhpCgi.h" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="lib\SNetwork\SNetworkLib.vcxproj">
-      <Project>{43ebf388-184a-4ce1-9815-c654f699fa62}</Project>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="src\network\ZiaNetwork.cpp" />
-    <ClCompile Include="src\zia\main.cpp" />
-    <ClCompile Include="src\zia\Zia.cpp" />
-    <ClCompile Include="src\zia\zia_main.cpp" />
+    <ClCompile Include="ModPhpCgi.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

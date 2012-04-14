@@ -9,6 +9,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SNetworkLib", "lib\SNetwork\SNetworkLib.vcxproj", "{43EBF388-184A-4CE1-9815-C654F699FA62}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PhpCgiMod", "PhpCgiMod\PhpCgiMod.vcxproj", "{52B867F7-9E56-42B2-AA6B-1CA46DF9B1FB}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3EC015F5-5BB7-4D05-AC63-43A144E06CBF} = {3EC015F5-5BB7-4D05-AC63-43A144E06CBF}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ModHelloWorld", "ModHelloWorld\ModHelloWorld.vcxproj", "{124189F8-561B-4ADC-8402-6EFDE963C4AE}"
 	ProjectSection(ProjectDependencies) = postProject
