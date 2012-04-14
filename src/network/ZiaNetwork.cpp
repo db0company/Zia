@@ -7,6 +7,7 @@
 #include "http/HttpLiterals.hpp"
 #include "http/HttpUtils.hpp"
 #include		"Selector.hpp"
+#include		"debug.h"
 
 /* ************************************************************************* */
 /*                             Coplian Form                                  */
@@ -93,6 +94,7 @@ void				ZiaNetwork::onClientRequest(ISocket * client,
     std::cout << client->getIp() << ": " << request << std::endl;
   http::HttpRequestParser reqp;
   bref::HttpRequest req = reqp.forge(request);
+  std::cout << req << std::endl;
 }
 
 /* ************************************************************************* */

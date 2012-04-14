@@ -35,6 +35,7 @@ SRCS		=	$(MAIN_DIR)main.cpp			\
 			$(MAIN_DIR)$(NAME)_main.cpp		\
 			\
 			$(MAIN_DIR)Zia.cpp			\
+			$(SRC_DIR)debug.cpp			\
 			\
 			$(NTWK_DIR)ZiaNetwork.cpp		\
 			\
