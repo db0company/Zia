@@ -1,6 +1,11 @@
 
 #include		"ZiaNetwork.hpp"
 
+#include "HttpRequest.h"
+#include "HttpResponse.h"
+#include "http/HttpRequestParser.hpp"
+#include "http/HttpLiterals.hpp"
+#include "http/HttpUtils.hpp"
 #include		"Selector.hpp"
 
 /* ************************************************************************* */
@@ -86,6 +91,8 @@ void				ZiaNetwork::onClientRequest(ISocket * client,
 							    std::string const & request) {
   if (v)
     std::cout << client->getIp() << ": " << request << std::endl;
+  http::HttpRequestParser reqp;
+  bref::HttpRequest req = reqp.forge(request);
 }
 
 /* ************************************************************************* */
