@@ -3,6 +3,7 @@
  * by lenorm_f
  */
 
+#include <cstdlib>
 #include "HttpLiterals.hpp"
 
 std::map<bref::status_codes::Type, std::string> http::status_codes::literals =

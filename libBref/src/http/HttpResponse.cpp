@@ -40,7 +40,7 @@ Buffer HttpResponse::getRawData() const {
 		   version_.Major, version_.Minor,
 		   statusCode_,
 		   http::status_codes::literals[statusCode_].c_str());
-#elif
+#else
 	::snprintf(buffer, sizeof(buffer),
 		   "HTTP/%d.%d %d %s\r\n",
 		   version_.Major, version_.Minor,

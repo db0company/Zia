@@ -26,7 +26,7 @@ static inline std::pair<std::string, std::string> split_on(std::string const &s,
 	}
 #ifdef _WIN32
 	return std::pair<std::string, std::string>(s1, s2);
-#elif
+#else
 	return {s1, s2};
 #endif
 }

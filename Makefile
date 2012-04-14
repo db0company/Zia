@@ -15,9 +15,12 @@ SRC_DIR		=	src/
 MAIN_DIR	=	$(SRC_DIR)$(NAME)/
 
 NTWK_DIR	=	$(SRC_DIR)network/
+HTTP_DIR	=	$(SRC_DIR)http/
 
 TOOL_DIR	=	$(SRC_DIR)tools/
 ERR_DIR		=	$(SRC_DIR)error/
+
+BREF_DIR	=	libBref/src/
 
 INCLUDE		=	-Iinclude/				\
 			-Isrc/					\
@@ -35,8 +38,23 @@ SRCS		=	$(MAIN_DIR)main.cpp			\
 			\
 			$(NTWK_DIR)ZiaNetwork.cpp		\
 			\
+			$(HTTP_DIR)HttpParser.cpp		\
+			$(HTTP_DIR)HttpRequestParser.cpp	\
+			$(HTTP_DIR)HttpLiterals.cpp		\
+			$(HTTP_DIR)HttpRequest.cpp		\
+			$(HTTP_DIR)HttpResponse.cpp		\
+			\
 			$(TOOL_DIR)InChannel.cpp		\
 			$(TOOL_DIR)OutChannel.cpp		\
+			\
+			$(BREF_DIR)config/BrefValue.cpp		\
+			$(BREF_DIR)config/Configuration.cpp	\
+			# $(BREF_DIR)http/HttpLiterals.cpp	\
+			# $(BREF_DIR)http/HttpParser.cpp		\
+			# $(BREF_DIR)http/HttpRequest.cpp		\
+			# $(BREF_DIR)http/HttpRequestParser.cpp	\
+			# $(BREF_DIR)http/HttpResponse.cpp	\
+			$(BREF_DIR)module/AModule.cpp		\
 			\
 
 ## Libraries
