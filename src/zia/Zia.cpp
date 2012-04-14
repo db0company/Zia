@@ -6,44 +6,37 @@
 /* ************************************************************************* */
 
 Zia::Zia(void)
-  : network()
-{}
+  : network() {}
 
 Zia::Zia(Zia const & other)
-    : network(other.network)
-{}
+    : network(other.network) {}
 
-Zia &		Zia::operator=(Zia const & other)
-{
-    if (&other != this)
-    {
-      this->network = other.network;
+Zia &		Zia::operator=(Zia const & other) {
+  if (&other != this) {
+    this->network = other.network;
 
       // If there is a pointer to something allocated, do this :
       // if (this->SomeThingAllocated)
       //   delete this->SomeThingAllocated;
       // this->SomeThingAllocated = CopyFunc(other.SomeThingAllocated);
-    }
-  return (*this);
+  }
+  return *this;
 }
 
-Zia::~Zia(void)
-{}
+Zia::~Zia(void) {}
 
 /* ************************************************************************* */
 /*                             Member Functions                              */
 /* ************************************************************************* */
 
-bool			Zia::init(void)
-{
+bool			Zia::init(void) {
   if (!(this->network.openConnection()))
-    return (false);
-  return (true);
+    return false;
+  return true;
 }
 
-bool			Zia::run(void)
-{
-  return (true);
+bool			Zia::run(void) {
+  return true;
 }
 
 

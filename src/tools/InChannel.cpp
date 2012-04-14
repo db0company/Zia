@@ -18,7 +18,7 @@ InChannel::~InChannel(void) {
 /* ************************************************************************* */
 
 InChannel::eIn		InChannel::getIn(void) const {
-  return (this->in);
+  return this->in;
 }
 
 /* ************************************************************************* */
@@ -30,10 +30,10 @@ bool			InChannel::setInFile(std::string const & filename) {
   this->file.open(filename.c_str(), std::ios::in);
   if (!this->file.is_open()) {
     this->in = InChannel::IN_STDIN;
-    return (false);
+    return false;
   }
   this->in = InChannel::IN_FILE;
-  return (true);
+  return true;
 }
 
 void			InChannel::setInStd(void) {
