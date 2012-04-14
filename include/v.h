@@ -3,7 +3,7 @@
 # define	VERBOSE_H_
 # ifdef _WIN32
 extern _Uint32t v;
-#elif
+#else
 extern uint v;
 # endif
 

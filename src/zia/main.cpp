@@ -7,7 +7,7 @@
 
 #ifdef _WIN32
 _Uint32t v = 0;
-#elif
+#else
 uint v = 0;
 #endif
 
@@ -18,7 +18,7 @@ static bool	usage(std::string filename) {
 
 static bool	verbose(int argc, char ** argv) {
 #ifdef _WIN32
-#elif
+#else
   int           c;
 
   while ((c = getopt(argc, argv, "v")) != EOF)

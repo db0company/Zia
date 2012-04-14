@@ -24,6 +24,7 @@ INCLUDE		=	-Iinclude/				\
 			-Iapi/					\
 			-I$(LIB_DIR)Thread/include/		\
 			-I$(LIB_DIR)SNetwork/include/		\
+			-Ibref-api/include/bref/		\
 			\
 
 ## Sources
