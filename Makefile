@@ -25,6 +25,7 @@ BREF_DIR	=	libBref/src/
 
 INCLUDE		=	-Iinclude/				\
 			-Isrc/					\
+			-Isrc/http				\
 			-Iapi/					\
 			-Isrc/tools/				\
 			-I$(LIB_DIR)Thread/include/		\

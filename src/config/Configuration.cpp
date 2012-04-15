@@ -37,7 +37,7 @@ const BrefValue		&Configuration::findValue(const std::string &key) const {
 }
 
 const BrefValue		&Configuration::findValue(const std::string &key,
-						  const HttpRequest &request) const {
+						  const HttpRequest&) const {
 
   // TODO : Deeper search in data tree depending on request parameters
 
@@ -95,9 +95,9 @@ void operator>>(const YAML::Node& node, BrefValue &v) {
       const YAML::Node *node_values =   node.FindValue("value");
 
       if (!node_name)
-	      throw std::exception("Node \"Name\" must be defined");
+	      throw Configuration::Error("Node \"Name\" must be defined");
       if (!node_values)
-		  throw std::exception("Node \"Values\" must be defined");
+		  throw Configuration::Error("Node \"Values\" must be defined");
 
       if (node_name->Type() != YAML::NodeType::Scalar)
 	return;
@@ -166,7 +166,7 @@ bool			Configuration::LoadFromFile(const std::string &input_file) {
       _value = tmp;
       return true;
     }
-  catch (std::exception &)
+  catch (Configuration::Error const&)
     {
       return false;
     }
@@ -176,7 +176,11 @@ bool			Configuration::LoadFromFile(const std::string &input_file) {
 
 void			Configuration::LoadDefaultConfig()
 {
+#ifdef _WIN32
+  _value["ZiaConfig"]["DocumentRoot"].setString("./");
+#else
   _value["ZiaConfig"]["DocumentRoot"].setString("/var/www/");
+#endif
   _value["ZiaConfig"]["ListeningPort"].setString("8080");
   _value["ZiaConfig"]["ServerName"].setString("Zia-Meow~");
 }
