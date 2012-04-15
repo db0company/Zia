@@ -3,6 +3,7 @@
 *.o
 bin/zia
 *.a
+a.out
 
 // It's up to you to update properly the submodule
 bref-api

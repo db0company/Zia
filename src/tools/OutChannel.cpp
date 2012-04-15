@@ -18,7 +18,7 @@ OutChannel::~OutChannel(void) {
 /* ************************************************************************* */
 
 OutChannel::eOut	OutChannel::getOut(void) const {
-  return (this->out);
+  return this->out;
 }
 
 /* ************************************************************************* */
@@ -31,10 +31,10 @@ bool			OutChannel::setOutFile(std::string const & filename,
   this->file.open(filename.c_str(), (trunc ? std::ios::out | std::ios::trunc : std::ios::out));
   if (!this->file.is_open()) {
     this->out = OutChannel::OUT_STDOUT;
-    return (false);
+    return false;
   }
   this->out = OutChannel::OUT_FILE;
-  return (true);
+  return true;
 }
 
 void			OutChannel::setOutStd(void) {

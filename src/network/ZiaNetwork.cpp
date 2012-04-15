@@ -1,7 +1,13 @@
 
 #include		"ZiaNetwork.hpp"
 
+#include "HttpRequest.h"
+#include "HttpResponse.h"
+#include "http/HttpRequestParser.hpp"
+#include "http/HttpLiterals.hpp"
+#include "http/HttpUtils.hpp"
 #include		"Selector.hpp"
+#include		"debug.h"
 
 /* ************************************************************************* */
 /*                             Coplian Form                                  */
@@ -86,6 +92,9 @@ void				ZiaNetwork::onClientRequest(ISocket * client,
 							    std::string const & request) {
   if (v)
     std::cout << client->getIp() << ": " << request << std::endl;
+  http::HttpRequestParser reqp;
+  bref::HttpRequest req = reqp.forge(request);
+  std::cout << req << std::endl;
 }
 
 /* ************************************************************************* */
@@ -138,14 +147,14 @@ bool				ZiaNetwork::readFromClient(ISocket * socket) {
       char           buff[4096] = {0};
       int	     red = 0;
       if ((red = socket->SNRead(buff, 4095)) <= 0)
-	return (this->delClient(socket));
+	return this->delClient(socket);
       else
 	{
 	  buff[red + 1] = '\0';
 	  this->onClientRequest(socket, buff);
 	}
     }
-  return (true);
+  return true;
 }
 
 void				ZiaNetwork::addClient(ATCPClientSocket * socket) {
@@ -165,5 +174,5 @@ bool				ZiaNetwork::delClient(ISocket * socket) {
   if (v)
     std::cout << "Client leave..." << socket->getIp() << std::endl;
   this->clients.remove(socket);
-  return (false);
+  return false;
 }

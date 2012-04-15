@@ -59,7 +59,7 @@ class			OutChannel {
   template <class T>
   OutChannel &		operator<<(T const & t) {
     this->put(t);
-    return (*this);
+    return *this;
   }
 
   template <class T>
@@ -68,7 +68,7 @@ class			OutChannel {
       (this->out == OUT_STDOUT ? std::cerr : this->file) << t << std::endl;
     else
       (this->out == OUT_STDOUT ? std::cerr : this->file) << t;
-    return (false);
+    return false;
   }
   // void			putNextLine(std::string const &);
   // void			putError(std::string const &);

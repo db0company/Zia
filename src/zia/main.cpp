@@ -5,28 +5,34 @@
 #include	<iostream>
 #include	"zia.h"
 
+#ifdef _WIN32
+_Uint32t v = 0;
+#else
 uint v = 0;
+#endif
 
 static bool	usage(std::string filename) {
   std::cerr << "usage: " << filename << " [-v]" << std::endl;
-  return (false);
+  return false;
 }
 
 static bool	verbose(int argc, char ** argv) {
+#ifdef _WIN32
+#else
   int           c;
 
-  while ((c = getopt(argc, argv, "v")) != EOF)
-    {
-      if (c == 'v')
-	++v;
-      else
-	return (usage(*argv));
-    }
-  return (true);
+  while ((c = getopt(argc, argv, "v")) != EOF) {
+    if (c == 'v')
+      ++v;
+    else
+      return usage(*argv);
+  }
+#endif
+  return true;
 }
 
 int		main(int argc, char ** argv) {
   if (!(verbose(argc, argv)))
-    return (EXIT_FAILURE);
+    return EXIT_FAILURE;
   return (zia_main() ? EXIT_SUCCESS : EXIT_FAILURE);
 }
