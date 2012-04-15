@@ -47,6 +47,8 @@ static bool request_handler_get(bref::BrefValue &conf,
 				std::string &body) {
 	std::string uri = req.getUri();
 
+	if (uri == "/")
+		uri = std::string("/index.html");
 	if (!uri.empty()
 	    && uri[0] == '/')
 		uri.insert(0, conf["ZiaConfig"]["DocumentRoot"].asString());
