@@ -102,7 +102,7 @@ void				ZiaNetwork::onClientRequest(ISocket * client,
 
   if (fp.second < 0) {
 	  rep.setStatus(bref::status_codes::NotFound);
-	  fp = utils::file_contents("404.html");
+	  fp = utils::file_contents("errors/404.html");
 	  rep["Content-Length"] = bref::BrefValue(utils::to_string(fp.second));
   }
   else {
