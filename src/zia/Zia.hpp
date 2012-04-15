@@ -17,7 +17,7 @@ class			Zia
 /*                             Coplian Form                                  */
 /* ************************************************************************* */
  public:
-  Zia(void);
+  Zia(std::string const& = "");
   Zia(Zia const &);
   Zia &			operator=(Zia const &);
   ~Zia(void);

@@ -9,12 +9,15 @@ namespace http {
 /*                             Coplian Form                                  */
 /* ************************************************************************* */
 
-Zia::Zia(void)
-  : network() {}
+Zia::Zia(std::string const &path)
+	: network(&config) {
+	config.LoadDefaultConfig();
+	if (!path.empty())
+		config.LoadFromFile(path);
+}
 
-Zia::Zia(Zia const & other)
+Zia::Zia(Zia const &other)
   : network(other.network) {
-  config.LoadDefaultConfig();
 }
 
 Zia &		Zia::operator=(Zia const & other) {
@@ -36,11 +39,13 @@ Zia::~Zia(void) {}
 /* ************************************************************************* */
 
 bool			Zia::init(void) {
-  http::init_literals();
-  if (!(this->network.openConnection()))
-    return false;
+	int const port = config.GetConfiguration()["ZiaConfig"]["ListeningPort"].asInt();
 
-  return true;
+	http::init_literals();
+	if (!(this->network.openConnection(port)))
+		return false;
+
+	return true;
 }
 
 bool			Zia::load_config(const std::string &path) {

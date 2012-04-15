@@ -88,17 +88,7 @@ bool			BrefValue::isDouble() const {
 // Getters
 
 const std::string	&BrefValue::asString() const {
-  if (isString())
     return stringValue_;
-
-  if (isInt())
-    return utils::to_string(intValue_);
-  else if (isBool())
-    return utils::to_string(boolValue_);
-  else if (isDouble())
-    return utils::to_string(doubleValue_);
-
-  return INVALID_STRING_VALUE;
 }
 
 int			BrefValue::asInt() const {
@@ -172,17 +162,19 @@ void			BrefValue::setString(const std::string &value) {
 void			BrefValue::setBool(bool value) {
   type_ = boolType;
   boolValue_ = value;
+  stringValue_ = utils::to_string(boolValue_);
 }
 
 void			BrefValue::setInt(int value) {
   type_ = intType;
   intValue_ = value;
+  stringValue_ = utils::to_string(intValue_);
 }
 
 void			BrefValue::setDouble(double value) {
   type_ = doubleType;
-
   doubleValue_ = value;
+  stringValue_ = utils::to_string(doubleValue_);
 }
 // Miscellaneous
 

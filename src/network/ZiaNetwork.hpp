@@ -25,12 +25,13 @@ class				ZiaNetwork
   ATCPServerSocket *		listener;
   bool				connection;
   std::list<ISocket *>		clients;
+  void *			_arg;
 
 /* ************************************************************************* */
 /*                             Coplian Form                                  */
 /* ************************************************************************* */
  public:
-  ZiaNetwork(void);
+  ZiaNetwork(void* = 0);
   ZiaNetwork(ZiaNetwork const &);
   ZiaNetwork &			operator=(ZiaNetwork const &);
   ~ZiaNetwork(void);

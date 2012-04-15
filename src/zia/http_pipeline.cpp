@@ -7,11 +7,17 @@
 #include "HttpRequest.h"
 #include "HttpResponse.h"
 #include "http/HttpLiterals.hpp"
+#include "config/Configuration.hpp"
 #include "tools/utils.hpp"
 
-#define BIND_HANDLER(addr) std::bind(addr, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3)
+#define BIND_HANDLER(addr) std::bind(addr, \
+				     std::placeholders::_1, \
+				     std::placeholders::_2, \
+				     std::placeholders::_3, \
+				     std::placeholders::_4)
 
-typedef std::function<bool(bref::HttpRequest const&,
+typedef std::function<bool(bref::BrefValue&,
+			   bref::HttpRequest const&,
 			   bref::HttpResponse&,
 			   std::string&)>
 	RequestHanderFunctor;
@@ -35,10 +41,17 @@ static void custom_rep(bref::HttpResponse &rep,
 	}
 }
 
-static bool request_handler_get(bref::HttpRequest const &req,
+static bool request_handler_get(bref::BrefValue &conf,
+				bref::HttpRequest const &req,
 				bref::HttpResponse &rep,
 				std::string &body) {
-	std::pair<std::string, int> fp = utils::file_contents(req.getUri().substr(1));
+	std::string uri = req.getUri();
+
+	if (!uri.empty()
+	    && uri[0] == '/')
+		uri.insert(0, conf["ZiaConfig"]["DocumentRoot"].asString());
+
+	std::pair<std::string, int> const fp = utils::file_contents(uri);
 
 	if (fp.second < 0)
 		custom_rep(rep,
@@ -50,13 +63,13 @@ static bool request_handler_get(bref::HttpRequest const &req,
 		rep["Content-Length"] = bref::BrefValue(utils::to_string(fp.second));
 	}
 
-	rep["Connection"] = bref::BrefValue(std::string("close"));
 	rep["Content-Type"] = bref::BrefValue(std::string("text/html; charset=UTF-8"));
 
 	return false;
 }
 
-bool http_pipeline(bref::HttpRequest const &req,
+bool http_pipeline(bref::BrefValue &conf,
+		   bref::HttpRequest const &req,
 		   bref::HttpResponse &rep,
 		   std::string &body) {
 	static std::map<bref::request_methods::Type, RequestHanderFunctor> _handlers{
@@ -64,16 +77,18 @@ bool http_pipeline(bref::HttpRequest const &req,
 	};
 
 	bool chunked = false;
-	if (req.getVersion().Major != 1
+	if (_handlers.find(req.getMethod()) == _handlers.end())
+		rep.setStatus(bref::status_codes::NotImplemented);
+	else if (req.getVersion().Major != 1
 	    || (req.getVersion().Minor != 0 && req.getVersion().Minor != 1))
 		rep.setStatus(bref::status_codes::HTTPVersionNotSupported);
-	else if (_handlers.find(req.getMethod()) == _handlers.end())
-		rep.setStatus(bref::status_codes::NotImplemented);
 	else
-		chunked = _handlers[req.getMethod()](req, rep, body);
+		chunked = _handlers[req.getMethod()](conf, req, rep, body);
 
-	rep.setVersion({1, 1});
-	rep["Server"] = bref::BrefValue(std::string("Zia"));
+	rep.setVersion(req.getVersion());
+	rep["Server"] = bref::BrefValue(conf["ZiaConfig"]["ServerName"]);
+	if (!chunked)
+		rep["Connection"] = bref::BrefValue(std::string("close"));
 
 	return chunked;
 }

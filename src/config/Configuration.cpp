@@ -183,8 +183,9 @@ bool			Configuration::LoadFromFile(const std::string &input_file) {
 
 void			Configuration::LoadDefaultConfig()
 {
-  _value["RootSection"]["DocumentRoot"].setString("/var/www/");
-  _value["RootSection"]["ListeningPort"].setInt(8080);
+  _value["ZiaConfig"]["DocumentRoot"].setString("/var/www/");
+  _value["ZiaConfig"]["ListeningPort"].setString("8080");
+  _value["ZiaConfig"]["ServerName"].setString("Zia-Meow~");
 }
 
 void			Configuration::LoadFromConfiguration(Configuration &c) {

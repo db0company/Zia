@@ -5,16 +5,18 @@
 #include "HttpResponse.h"
 #include "http/HttpRequestParser.hpp"
 #include "http/HttpUtils.hpp"
+#include "config/Configuration.hpp"
 #include "Selector.hpp"
 #include "debug.h"
 #include "tools/utils.hpp"
 
-bool http_pipeline(bref::HttpRequest const&, bref::HttpResponse&, std::string&);
+bool http_pipeline(bref::BrefValue&, bref::HttpRequest const&, bref::HttpResponse&, std::string&);
+
 /* ************************************************************************* */
 /*                             Coplian Form                                  */
 /* ************************************************************************* */
 
-ZiaNetwork::ZiaNetwork(void)
+ZiaNetwork::ZiaNetwork(void *arg)
   : selector(), listener(), connection(false) {
 #ifndef WIN32
   this->selector = new Selector<int>;
@@ -23,6 +25,8 @@ ZiaNetwork::ZiaNetwork(void)
   this->selector = new Selector<SOCKET>;
   this->listener = new TCPServerSocketWindows(this->selector);
 #endif
+
+  _arg = arg;
 }
 
 ZiaNetwork::ZiaNetwork(ZiaNetwork const & other)
@@ -89,8 +93,10 @@ void				ZiaNetwork::onClientLeave(void) {
 
 }
 
-void				ZiaNetwork::onClientRequest(ISocket * client,
-							    std::string const & request) {
+void				ZiaNetwork::onClientRequest(ISocket *client,
+							    std::string const &request) {
+  static bref::BrefValue conf = reinterpret_cast<Configuration*>(_arg)->GetConfiguration();
+
   if (v)
     std::cout << client->getIp() << ": " << request << std::endl;
 
@@ -100,7 +106,7 @@ void				ZiaNetwork::onClientRequest(ISocket * client,
 
   bref::HttpRequest req = reqp.forge(request);
 
-  http_pipeline(req, rep, body);
+  http_pipeline(conf, req, rep, body);
 
   std::string const reps = http::util::to_string(rep.getRawData())
 	  + body;
@@ -113,18 +119,16 @@ void				ZiaNetwork::onClientRequest(ISocket * client,
 /* ************************************************************************* */
 
 void				ZiaNetwork::run(void) {
-  // todo: this must be in a thread!
-
-  while (true) {
-      this->listener->SNAddRead();
-     if (!this->selector->SNSelect()) {
-       if (v)
-	 std::cerr << "Error: Select" << std::endl;
-       return ;
-     }
-     this->getNewClient();
-     this->readFromClients();
-  }
+	for (;;) {	
+		this->listener->SNAddRead();
+		if (!this->selector->SNSelect()) {
+			if (v)
+				std::cerr << "Error: Select" << std::endl;
+			return ;
+		}
+		this->getNewClient();
+		this->readFromClients();
+	}
 }
 
 void				ZiaNetwork::getNewClient(void) {
