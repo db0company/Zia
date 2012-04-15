@@ -1,6 +1,10 @@
 
 #include		"Zia.hpp"
 
+namespace http {
+	void init_literals();
+}
+
 /* ************************************************************************* */
 /*                             Coplian Form                                  */
 /* ************************************************************************* */
@@ -30,8 +34,10 @@ Zia::~Zia(void) {}
 /* ************************************************************************* */
 
 bool			Zia::init(void) {
+  http::init_literals();
   if (!(this->network.openConnection()))
     return false;
+
   return true;
 }
 

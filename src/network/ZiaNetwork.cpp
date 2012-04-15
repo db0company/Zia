@@ -8,6 +8,7 @@
 #include "http/HttpUtils.hpp"
 #include		"Selector.hpp"
 #include		"debug.h"
+#include "tools/utils.hpp"
 
 /* ************************************************************************* */
 /*                             Coplian Form                                  */
@@ -94,7 +95,30 @@ void				ZiaNetwork::onClientRequest(ISocket * client,
     std::cout << client->getIp() << ": " << request << std::endl;
   http::HttpRequestParser reqp;
   bref::HttpRequest req = reqp.forge(request);
-  std::cout << req << std::endl;
+
+  bref::HttpResponse rep;
+
+  std::pair<std::string, int> fp = utils::file_contents(req.getUri().substr(1));
+
+  if (fp.second < 0) {
+	  rep.setStatus(bref::status_codes::NotFound);
+	  fp = utils::file_contents("404.html");
+	  rep["Content-Length"] = bref::BrefValue(utils::to_string(fp.second));
+  }
+  else {
+	  rep.setStatus(bref::status_codes::OK);
+	  rep["Content-Length"] = bref::BrefValue(utils::to_string(fp.second));
+  }
+
+  rep.setVersion({1, 1});
+  rep["Server"] = bref::BrefValue(std::string("Zia"));
+  rep["Connection"] = bref::BrefValue(std::string("close"));
+  rep["Content-Type"] = bref::BrefValue(std::string("text/html; charset=UTF-8"));
+
+  std::string const reps = http::util::to_string(rep.getRawData())
+	  + fp.first;
+
+  client->SNWrite(reps.c_str(), reps.length());
 }
 
 /* ************************************************************************* */

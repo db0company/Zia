@@ -1,8 +1,9 @@
 #ifndef __UTILS_HPP__
 # define __UTILS_HPP__
 
-#include <iostream>
+#include <string>
 #include <sstream>
+#include <iostream>
 
 namespace utils
 {
@@ -23,6 +24,8 @@ namespace utils
 
     return oss.str();
   }
+
+  std::pair<std::string, int> file_contents(std::string const&);
 }
 
 #endif

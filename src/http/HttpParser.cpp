@@ -69,7 +69,6 @@ bool HttpParser::eol(bref::Buffer::const_iterator &it,
 // Public Functions
 HttpParser::eState HttpParser::parse(bref::Buffer::const_iterator &it,
 				     bref::Buffer::const_iterator const &it_end) {
-	HttpParser::token_type c;
 	while (it != it_end) {
 		if (eol(it, it_end)) {
 			_tokens.push_back(_token);
@@ -77,7 +76,7 @@ HttpParser::eState HttpParser::parse(bref::Buffer::const_iterator &it,
 			return FEED_ME;
 		}
 		else if (!spc(it, it_end)) {
-			c = consume(it);
+			consume(it);
 		}
 		else {
 			_tokens.push_back(_token);

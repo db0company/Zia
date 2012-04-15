@@ -89,11 +89,11 @@ const std::string	&BrefValue::asString() const {
     return stringValue_;
 
   if (isInt())
-    return to_string(intValue_);
-  if (isBool())
-    return to_string(boolValue_);
-  if (isDouble())
-    return to_string(doubleValue_);
+    return utils::to_string(intValue_);
+  else if (isBool())
+    return utils::to_string(boolValue_);
+  else if (isDouble())
+    return utils::to_string(doubleValue_);
 
   return INVALID_STRING_VALUE;
 }

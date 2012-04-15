@@ -3,7 +3,6 @@
  * by lenorm_f
  */
 
-#include <stdio.h>
 #include <HttpResponse.h>
 #include "HttpLiterals.hpp"
 #include "HttpUtils.hpp"
@@ -38,12 +37,14 @@ Buffer HttpResponse::getRawData() const {
 		   "HTTP/%d.%d %d %s\r\n",
 		   version_.Major, version_.Minor,
 		   statusCode_,
-		   http::status_codes::literals[statusCode_].c_str());
-	for (unsigned int i = 0; i < sizeof(buffer) && buffer[i]; ++i)
-		b.push_back(buffer[i]);
+		   reason_.c_str());
+	b = http::util::to_buffer(std::string(buffer));
+
 	HttpResponse::const_iterator it = this->begin();
 	for (;it != this->end(); ++it) {
-		if (it->second.isString()) {
+		if (it->second.isString()
+		    || it->second.isInt()
+		    || it->second.isBool()) {
 			http::util::queue_pair_to_buffer(b,
 							 it->first,
 							 it->second.asString());
@@ -77,6 +78,7 @@ Buffer HttpResponse::getRawData() const {
 		}
 		http::util::queue_to_buffer(b, "\r\n");
 	}
+	http::util::queue_to_buffer(b, "\r\n");
 
 	return b;
 }
@@ -88,6 +90,7 @@ void HttpResponse::setVersion(Version const &version) {
 
 void HttpResponse::setStatus(status_codes::Type code) {
 	statusCode_ = code;
+	reason_ = http::status_codes::literals[code];
 }
 
 void HttpResponse::setReason(std::string const &reason) {

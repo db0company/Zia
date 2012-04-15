@@ -47,14 +47,10 @@ SRCS		=	$(MAIN_DIR)main.cpp			\
 			\
 			$(TOOL_DIR)InChannel.cpp		\
 			$(TOOL_DIR)OutChannel.cpp		\
+			$(TOOL_DIR)file_contents.cpp		\
 			\
 			$(BREF_DIR)config/BrefValue.cpp		\
 			$(BREF_DIR)config/Configuration.cpp	\
-			# $(BREF_DIR)http/HttpLiterals.cpp	\
-			# $(BREF_DIR)http/HttpParser.cpp		\
-			# $(BREF_DIR)http/HttpRequest.cpp		\
-			# $(BREF_DIR)http/HttpRequestParser.cpp	\
-			# $(BREF_DIR)http/HttpResponse.cpp	\
 			$(BREF_DIR)module/AModule.cpp		\
 			\
 
@@ -67,7 +63,7 @@ OBJS		=	$(SRCS:.cpp=.o)
 # functions
 RM		=	rm -f
 CXX		=	g++
-CFLAGS		=	-ldl -fPIC -W -Wall
+CFLAGS		=	-ldl -fPIC -W -Wall -std=c++0x
 LDFLAGS		=	-export-dynamic
 
 ## RULES

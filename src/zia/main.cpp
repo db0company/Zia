@@ -1,4 +1,5 @@
 
+#include	<unistd.h>
 #include	<cstdlib>
 #include	<cstdio>
 #include	<string>
@@ -21,7 +22,7 @@ static bool	verbose(int argc, char ** argv) {
 #else
   int           c;
 
-  while ((c = getopt(argc, argv, "v")) != EOF) {
+  while ((c = ::getopt(argc, argv, "v")) != EOF) {
     if (c == 'v')
       ++v;
     else
