@@ -5,21 +5,25 @@
 
 using namespace bref;
 
+// Compiling instructions : g++ main.cpp Configuration.cpp BrefValue.cpp ../zia/baseexcept.cpp -I../../bref-api/include/bref/ -lyaml-cpp -std=c++0x -I../tools/ -I../../include/
+// Testing instructions : ./a.out .zia-config
+
 int main(int ac, char **av)
 {
-  BrefValue	a(42);
+  if (ac > 1)
+    {
+      Configuration		config;
 
-  std::cout << a.asString() << std::endl;
-  std::cout << a.asInt() << std::endl;
+      if (!config.LoadFromFile(av[1]))
+	{
+	  std::cerr << "Configuration loading has failed, aborting.." << std::endl;
+	  exit(1);
+	}
 
-  Configuration	config;
+      std::cout << "Configuration's loading sucess" << std::endl;
 
-  //config.LoadFromFile(".zia-config");
+      BrefValue			c = config.GetConfiguration();
 
-  BrefValue	doc_root = config.findValue("DocumentRoot");
-
-  if (doc_root.isString() && doc_root.asString().empty())
-    std::cout << "Document Root found : " << doc_root.asString() << std::endl;
-  else
-    std::cout << "Document Root not found" << std::endl;
+      std::cout << c["RootSection"] << std::endl;
+    }
 }

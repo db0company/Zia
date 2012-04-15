@@ -99,6 +99,11 @@ namespace zia
       for (; it != _subnodes.end(); ++it)
 	it->dump(stream, depth - 1, already_computed + 1);
     }
+    template <typename T>
+    T		Node::getValue() const
+    {
+
+    }
   }
 }
 
