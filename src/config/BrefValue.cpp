@@ -1,4 +1,5 @@
 #include "BrefValue.h"
+#include "utils.hpp"
 
 using namespace bref;
 
@@ -18,7 +19,7 @@ BrefValue::BrefValue()
 
 BrefValue::BrefValue(double value)
   : type_(intType),
-    intValue_(static_cast<int>(value))
+    doubleValue_(value)
 {
 }
 
@@ -76,27 +77,53 @@ bool			BrefValue::isList() const {
 bool			BrefValue::isArray() const {
   return (type_ == arrayType);
 }
+
+bool			BrefValue::isNull() const {
+  return (type_ == nullType);
+}
+
 // Getters
 
 const std::string	&BrefValue::asString() const {
-  if (!isString())
-    return INVALID_STRING_VALUE;
+  if (isString())
+    return stringValue_;
 
-  return stringValue_;
+  if (isInt())
+    return to_string(intValue_);
+  if (isBool())
+    return to_string(boolValue_);
+  if (isDouble())
+    return to_string(doubleValue_);
+
+  return INVALID_STRING_VALUE;
 }
 
 int			BrefValue::asInt() const {
-  if (!isInt())
-    return INVALID_INT_VALUE;
+  if (isInt())
+    return intValue_;
 
-  return intValue_;
+  if (isString())
+    return convert_to<int>(stringValue_);
+  if (isBool())
+    return convert_to<int>(boolValue_);
+  if (isDouble())
+    return static_cast<int>(doubleValue_);
+
+  return INVALID_INT_VALUE;
 }
 
 bool			BrefValue::asBool() const {
-  if (!isBool())
-    return INVALID_BOOL_VALUE;
+  if (isBool())
+    return boolValue_;
 
-  return boolValue_;
+  if (isString())
+    return convert_to<bool>(stringValue_);
+  if (isInt())
+    return convert_to<bool>(intValue_);
+  if (isDouble())
+    return static_cast<bool>(doubleValue_);
+
+  return INVALID_BOOL_VALUE;
 }
 
 const BrefValueList	&BrefValue::asList() const {
@@ -127,20 +154,9 @@ bool			BrefValue::hasKey(const std::string &key) const {
 }
 
 BrefValue		&BrefValue::operator[](const std::string &key) {
+  type_ = arrayType;
+
   return arrayValue_[key];
-
-  /*
-  if (!hasKey(key))
-    return VALUE_NOT_FOUND;
-
-  for (BrefValueArray::const_iterator it = arrayValue_.begin();
-       it != arrayValue_.end();
-       ++it)
-    if (it->first == key)
-      return it->second;
-
-  return VALUE_NOT_FOUND;
-  */
 }
 
 // Setters
@@ -160,6 +176,11 @@ void			BrefValue::setInt(int value) {
   intValue_ = value;
 }
 
+void			BrefValue::setDouble(double value) {
+  type_ = doubleType;
+
+  doubleValue_ = value;
+}
 // Miscellaneous
 
 void			BrefValue::push(const BrefValue &node) {
