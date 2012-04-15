@@ -4,12 +4,12 @@
 #include "HttpRequest.h"
 #include "HttpResponse.h"
 #include "http/HttpRequestParser.hpp"
-#include "http/HttpLiterals.hpp"
 #include "http/HttpUtils.hpp"
-#include		"Selector.hpp"
-#include		"debug.h"
+#include "Selector.hpp"
+#include "debug.h"
 #include "tools/utils.hpp"
 
+bool http_pipeline(bref::HttpRequest const&, bref::HttpResponse&, std::string&);
 /* ************************************************************************* */
 /*                             Coplian Form                                  */
 /* ************************************************************************* */
@@ -93,30 +93,17 @@ void				ZiaNetwork::onClientRequest(ISocket * client,
 							    std::string const & request) {
   if (v)
     std::cout << client->getIp() << ": " << request << std::endl;
+
   http::HttpRequestParser reqp;
+  bref::HttpResponse rep;
+  std::string body;
+
   bref::HttpRequest req = reqp.forge(request);
 
-  bref::HttpResponse rep;
-
-  std::pair<std::string, int> fp = utils::file_contents(req.getUri().substr(1));
-
-  if (fp.second < 0) {
-	  rep.setStatus(bref::status_codes::NotFound);
-	  fp = utils::file_contents("errors/404.html");
-	  rep["Content-Length"] = bref::BrefValue(utils::to_string(fp.second));
-  }
-  else {
-	  rep.setStatus(bref::status_codes::OK);
-	  rep["Content-Length"] = bref::BrefValue(utils::to_string(fp.second));
-  }
-
-  rep.setVersion({1, 1});
-  rep["Server"] = bref::BrefValue(std::string("Zia"));
-  rep["Connection"] = bref::BrefValue(std::string("close"));
-  rep["Content-Type"] = bref::BrefValue(std::string("text/html; charset=UTF-8"));
+  http_pipeline(req, rep, body);
 
   std::string const reps = http::util::to_string(rep.getRawData())
-	  + fp.first;
+	  + body;
 
   client->SNWrite(reps.c_str(), reps.length());
 }
