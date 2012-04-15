@@ -114,7 +114,7 @@ void				ZiaNetwork::onClientRequest(ISocket *client,
   std::string const reps = http::util::to_string(rep.getRawData())
 	  + body;
 
-  client->SNWrite(reps.c_str(), reps.length());
+  client->SNWrite(reps.c_str(), reps.length() - 1);
 }
 
 /* ************************************************************************* */

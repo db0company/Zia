@@ -27,7 +27,7 @@ static std::string _rnd_buffer;
 static void custom_rep(bref::HttpResponse &rep,
 		       std::string &body = _rnd_buffer,
 		       bref::status_codes::Type err = bref::status_codes::UndefinedStatusCode) {
-	rep.setStatus(bref::status_codes::NotFound);
+	rep.setStatus(err);
 
 	if (err == bref::status_codes::UndefinedStatusCode)
 		rep["Content-Length"] = bref::BrefValue(std::string("0"));
@@ -47,7 +47,14 @@ static bool request_handler_get(bref::BrefValue &conf,
 				std::string &body) {
 	std::string uri = req.getUri();
 
-	if (!uri.empty()
+	if (uri == "/") {
+		custom_rep(rep,
+			   body,
+			   bref::status_codes::MovedPermanently);
+		rep["Location"] = bref::BrefValue(std::string("/index.html"));
+		return false;
+	}
+	else if (!uri.empty()
 	    && uri[0] == '/')
 		uri.insert(0, conf["ZiaConfig"]["DocumentRoot"].asString());
 
