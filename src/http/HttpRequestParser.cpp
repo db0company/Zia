@@ -7,8 +7,6 @@
 #include "HttpLiterals.hpp"
 #include "HttpUtils.hpp"
 
-#include <iostream>
-
 static inline std::pair<std::string, std::string> split_on(std::string const &s, char c) {
 	std::string s1;
 	std::string s2;
@@ -25,7 +23,7 @@ static inline std::pair<std::string, std::string> split_on(std::string const &s,
 		}
 	}
 
-	return {s1, s2};
+	return std::pair<std::string, std::string>(s1, s2);
 }
 
 namespace http {

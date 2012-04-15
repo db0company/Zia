@@ -41,7 +41,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(ProjectDir)bref-api\include\bref;$(ProjectDir)src\network;$(ProjectDir)lib\SNetwork\include;$(ProjectDir)src;$(ProjectDir)include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)src/tools/;$(ProjectDir)yaml-cpp\include\;$(ProjectDir)bref-api\include\bref;$(ProjectDir)src\network;$(ProjectDir)lib\SNetwork\include;$(ProjectDir)src;$(ProjectDir)include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -55,6 +55,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>$(ProjectDir)lib\SNetwork\include\;$(ProjectDir)src\;$(ProjectDir)src\http\;$(ProjectDir)src\tools\;$(ProjectDir)include\;$(ProjectDir)bref-api\include\bref\;$(ProjectDir)yaml-cpp\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -72,10 +73,22 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\config\BrefValue.cpp" />
+    <ClCompile Include="src\config\Configuration.cpp" />
+    <ClCompile Include="src\http\HttpLiterals.cpp" />
+    <ClCompile Include="src\http\HttpParser.cpp" />
+    <ClCompile Include="src\http\HttpRequest.cpp" />
+    <ClCompile Include="src\http\HttpRequestParser.cpp" />
+    <ClCompile Include="src\http\HttpResponse.cpp" />
     <ClCompile Include="src\network\ZiaNetwork.cpp" />
+    <ClCompile Include="src\tools\file_contents.cpp" />
+    <ClCompile Include="src\zia\http_pipeline.cpp" />
     <ClCompile Include="src\zia\main.cpp" />
     <ClCompile Include="src\zia\Zia.cpp" />
     <ClCompile Include="src\zia\zia_main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="yaml-cpp\build\Release\libyaml-cppmd.lib" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

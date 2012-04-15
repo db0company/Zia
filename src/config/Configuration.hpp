@@ -5,8 +5,6 @@
 #include <yaml-cpp/yaml.h>
 #include <IConfHelper.h>
 
-#include "configexcept.hpp"
-
 using namespace bref;
 
 class		Configuration : public IConfHelper

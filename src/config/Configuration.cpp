@@ -1,7 +1,7 @@
 #include <fstream>
 #include <string>
 #include <vector>
-#include <tr1/functional>
+#include <functional>
 
 #include "Configuration.hpp"
 #include "yaml-cpp/yaml.h"
@@ -81,8 +81,6 @@ std::ostream &operator <<(std::ostream &out, BrefValue &v) {
 
 void operator>>(const YAML::Node& node, BrefValue &v) {
 
-  try
-    {
       std::string	name;
       std::string	value;
 
@@ -97,9 +95,9 @@ void operator>>(const YAML::Node& node, BrefValue &v) {
       const YAML::Node *node_values =   node.FindValue("value");
 
       if (!node_name)
-	throw ConfigExcept{"Node \"Name\" must be defined"};
+	      throw std::exception("Node \"Name\" must be defined");
       if (!node_values)
-	throw ConfigExcept{"Node \"Values\" must be defined"};
+		  throw std::exception("Node \"Values\" must be defined");
 
       if (node_name->Type() != YAML::NodeType::Scalar)
 	return;
@@ -139,11 +137,6 @@ void operator>>(const YAML::Node& node, BrefValue &v) {
 	  *node_values >> value;
 	  v[name] = BrefValue(value);
 	}
-    }
-  catch (std::exception &e)
-    {
-      throw ConfigExcept{e.what(), "\nConfiguration file doesn't respect YAML standards, aborting and loading default configuration"};
-    }
 }
 
 bool			Configuration::LoadFromFile(const std::string &input_file) {
@@ -173,7 +166,7 @@ bool			Configuration::LoadFromFile(const std::string &input_file) {
       _value = tmp;
       return true;
     }
-  catch (std::exception &c)
+  catch (std::exception &)
     {
       return false;
     }

@@ -1,10 +1,13 @@
+#ifdef _WIN32
+#pragma comment(lib, "ws2_32.lib")
+#endif
 
 #include		"ZiaNetwork.hpp"
 
 #include "HttpRequest.h"
 #include "HttpResponse.h"
-#include "http/HttpRequestParser.hpp"
-#include "http/HttpUtils.hpp"
+#include "HttpRequestParser.hpp"
+#include "HttpUtils.hpp"
 #include "config/Configuration.hpp"
 #include "Selector.hpp"
 #include "debug.h"

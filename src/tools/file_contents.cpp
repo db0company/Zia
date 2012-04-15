@@ -15,7 +15,7 @@ std::pair<std::string, int> file_contents(std::string const &path) {
 
 	is.open(path, std::ios::binary );
 	if (!is)
-		return {"", -1};
+		return std::pair<std::string, int>("", -1);
 
 	is.seekg(0, std::ios::end);
 	length = is.tellg();
@@ -29,6 +29,6 @@ std::pair<std::string, int> file_contents(std::string const &path) {
 
 	delete[] buffer;
 
-	return {s, length};
+	return std::pair<std::string, int>(s, length);
 }
 }

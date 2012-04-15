@@ -1,5 +1,7 @@
 
+#ifndef _WIN32
 #include	<unistd.h>
+#endif
 #include	<cstdlib>
 #include	<cstdio>
 #include	<string>

@@ -3,9 +3,15 @@
  * by lenorm_f
  */
 
+#include <cstdio>
+
 #include <HttpResponse.h>
 #include "HttpLiterals.hpp"
 #include "HttpUtils.hpp"
+
+#if _WIN32
+#define snprintf sprintf_s
+#endif 
 
 namespace bref {
 // CTors/DTors

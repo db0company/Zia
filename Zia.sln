@@ -2,23 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Zia", "Zia.vcxproj", "{515FB06A-89E5-436F-A5EB-97F1809F8835}"
-	ProjectSection(ProjectDependencies) = postProject
-		{3EC015F5-5BB7-4D05-AC63-43A144E06CBF} = {3EC015F5-5BB7-4D05-AC63-43A144E06CBF}
-	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SNetworkLib", "lib\SNetwork\SNetworkLib.vcxproj", "{43EBF388-184A-4CE1-9815-C654F699FA62}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PhpCgiMod", "PhpCgiMod\PhpCgiMod.vcxproj", "{52B867F7-9E56-42B2-AA6B-1CA46DF9B1FB}"
-	ProjectSection(ProjectDependencies) = postProject
-		{3EC015F5-5BB7-4D05-AC63-43A144E06CBF} = {3EC015F5-5BB7-4D05-AC63-43A144E06CBF}
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ModHelloWorld", "ModHelloWorld\ModHelloWorld.vcxproj", "{124189F8-561B-4ADC-8402-6EFDE963C4AE}"
-	ProjectSection(ProjectDependencies) = postProject
-		{3EC015F5-5BB7-4D05-AC63-43A144E06CBF} = {3EC015F5-5BB7-4D05-AC63-43A144E06CBF}
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libBref", "libBref\libBref.vcxproj", "{3EC015F5-5BB7-4D05-AC63-43A144E06CBF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -34,18 +19,6 @@ Global
 		{43EBF388-184A-4CE1-9815-C654F699FA62}.Debug|Win32.Build.0 = Debug|Win32
 		{43EBF388-184A-4CE1-9815-C654F699FA62}.Release|Win32.ActiveCfg = Release|Win32
 		{43EBF388-184A-4CE1-9815-C654F699FA62}.Release|Win32.Build.0 = Release|Win32
-		{52B867F7-9E56-42B2-AA6B-1CA46DF9B1FB}.Debug|Win32.ActiveCfg = Debug|Win32
-		{52B867F7-9E56-42B2-AA6B-1CA46DF9B1FB}.Debug|Win32.Build.0 = Debug|Win32
-		{52B867F7-9E56-42B2-AA6B-1CA46DF9B1FB}.Release|Win32.ActiveCfg = Release|Win32
-		{52B867F7-9E56-42B2-AA6B-1CA46DF9B1FB}.Release|Win32.Build.0 = Release|Win32
-		{124189F8-561B-4ADC-8402-6EFDE963C4AE}.Debug|Win32.ActiveCfg = Debug|Win32
-		{124189F8-561B-4ADC-8402-6EFDE963C4AE}.Debug|Win32.Build.0 = Debug|Win32
-		{124189F8-561B-4ADC-8402-6EFDE963C4AE}.Release|Win32.ActiveCfg = Release|Win32
-		{124189F8-561B-4ADC-8402-6EFDE963C4AE}.Release|Win32.Build.0 = Release|Win32
-		{3EC015F5-5BB7-4D05-AC63-43A144E06CBF}.Debug|Win32.ActiveCfg = Debug|Win32
-		{3EC015F5-5BB7-4D05-AC63-43A144E06CBF}.Debug|Win32.Build.0 = Debug|Win32
-		{3EC015F5-5BB7-4D05-AC63-43A144E06CBF}.Release|Win32.ActiveCfg = Release|Win32
-		{3EC015F5-5BB7-4D05-AC63-43A144E06CBF}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
