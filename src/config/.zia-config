@@ -1,4 +1,4 @@
-- name: RootSection
+- RootSection
   value:
     - name: DocumentRoot
       value: /var/www

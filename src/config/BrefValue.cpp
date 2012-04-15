@@ -82,6 +82,9 @@ bool			BrefValue::isNull() const {
   return (type_ == nullType);
 }
 
+bool			BrefValue::isDouble() const {
+  return (type_ == doubleType);
+}
 // Getters
 
 const std::string	&BrefValue::asString() const {
@@ -103,9 +106,9 @@ int			BrefValue::asInt() const {
     return intValue_;
 
   if (isString())
-    return convert_to<int>(stringValue_);
+    return utils::convert_to<int>(stringValue_);
   if (isBool())
-    return convert_to<int>(boolValue_);
+    return static_cast<int>(boolValue_);
   if (isDouble())
     return static_cast<int>(doubleValue_);
 
@@ -117,9 +120,9 @@ bool			BrefValue::asBool() const {
     return boolValue_;
 
   if (isString())
-    return convert_to<bool>(stringValue_);
+    return utils::convert_to<bool>(stringValue_);
   if (isInt())
-    return convert_to<bool>(intValue_);
+    return static_cast<bool>(intValue_);
   if (isDouble())
     return static_cast<bool>(doubleValue_);
 
