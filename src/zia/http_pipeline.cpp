@@ -50,8 +50,6 @@ static bool request_handler_get(bref::HttpRequest const &req,
 		rep["Content-Length"] = bref::BrefValue(utils::to_string(fp.second));
 	}
 
-	rep.setVersion({1, 1});
-	rep["Server"] = bref::BrefValue(std::string("Zia"));
 	rep["Connection"] = bref::BrefValue(std::string("close"));
 	rep["Content-Type"] = bref::BrefValue(std::string("text/html; charset=UTF-8"));
 
@@ -64,10 +62,18 @@ bool http_pipeline(bref::HttpRequest const &req,
 	static std::map<bref::request_methods::Type, RequestHanderFunctor> _handlers{
 		{bref::request_methods::Get, BIND_HANDLER(&request_handler_get)},
 	};
-	if (_handlers.find(req.getMethod()) == _handlers.end())
-		;
-	else
-		return _handlers[req.getMethod()](req, rep, body);
 
-	return false;
+	bool chunked = false;
+	if (req.getVersion().Major != 1
+	    || (req.getVersion().Minor != 0 && req.getVersion().Minor != 1))
+		rep.setStatus(bref::status_codes::HTTPVersionNotSupported);
+	else if (_handlers.find(req.getMethod()) == _handlers.end())
+		rep.setStatus(bref::status_codes::NotImplemented);
+	else
+		chunked = _handlers[req.getMethod()](req, rep, body);
+
+	rep.setVersion({1, 1});
+	rep["Server"] = bref::BrefValue(std::string("Zia"));
+
+	return chunked;
 }
