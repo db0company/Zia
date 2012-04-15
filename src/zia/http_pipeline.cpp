@@ -68,13 +68,18 @@ static bool request_handler_get(bref::BrefValue &conf,
 	return false;
 }
 
+static void _handlers_init(std::map<bref::request_methods::Type, RequestHanderFunctor> &_handlers) {
+	_handlers[bref::request_methods::Get] = BIND_HANDLER(&request_handler_get);
+}
+
 bool http_pipeline(bref::BrefValue &conf,
 		   bref::HttpRequest const &req,
 		   bref::HttpResponse &rep,
 		   std::string &body) {
-	static std::map<bref::request_methods::Type, RequestHanderFunctor> _handlers{
-		{bref::request_methods::Get, BIND_HANDLER(&request_handler_get)},
-	};
+	static std::map<bref::request_methods::Type, RequestHanderFunctor> _handlers;
+
+	if (_handlers.empty())
+		_handlers_init(_handlers);
 
 	bool chunked = false;
 	if (_handlers.find(req.getMethod()) == _handlers.end())
