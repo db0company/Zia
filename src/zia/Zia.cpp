@@ -13,7 +13,9 @@ Zia::Zia(void)
   : network() {}
 
 Zia::Zia(Zia const & other)
-    : network(other.network) {}
+  : network(other.network) {
+  config.LoadDefaultConfig();
+}
 
 Zia &		Zia::operator=(Zia const & other) {
   if (&other != this) {
@@ -41,8 +43,14 @@ bool			Zia::init(void) {
   return true;
 }
 
+bool			Zia::load_config(const std::string &path) {
+  return config.LoadFromFile(path);
+}
+
+void			Zia::load_config(Configuration &c) {
+  config.LoadFromConfiguration(c);
+}
+
 bool			Zia::run(void) {
   return true;
 }
-
-

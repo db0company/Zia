@@ -2,6 +2,7 @@
 # define		ZIA_H_
 
 # include		"network/ZiaNetwork.hpp"
+#include		"config/Configuration.hpp"
 
 class			Zia
 {
@@ -10,6 +11,7 @@ class			Zia
 /* ************************************************************************* */
  private:
   ZiaNetwork			network;
+  Configuration			config;
 
 /* ************************************************************************* */
 /*                             Coplian Form                                  */
@@ -26,6 +28,8 @@ class			Zia
  public:
   bool				init(void);
   bool				run(void);
+  bool				load_config(const std::string &);
+  void				load_config(Configuration &);
 };
 
 #endif			// !ZIA_H_

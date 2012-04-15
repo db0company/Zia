@@ -53,25 +53,24 @@ std::ostream &operator <<(std::ostream &out, BrefValue &v) {
     out << std::boolalpha << v.asBool();
   else if (v.isArray())
     {
+      out << "Map:" << std::endl;
       BrefValueArray ar = v.asArray();
 
       for (BrefValueArray::iterator it = ar.begin();
 	   it != ar.end();
 	   ++it)
-	{
-	  out << it->first << " : " << it->second;
-	}
+	out << "[" << it->first << "] = " << it->second;
     }
   else if (v.isList())
     {
-      out << std::endl;
+      out << "List:" << std::endl;
       BrefValueList li = v.asList();
 
       for (BrefValueList::iterator it = li.begin();
 	   it != li.end();
 	   ++it)
 	{
-	  out << *it;
+	  out << "Item=" << *it << std::endl;
 	}
     }
   else if (v.isNull())
@@ -117,7 +116,22 @@ void operator>>(const YAML::Node& node, BrefValue &v) {
 	      BrefValue t = BrefValue();
 
 	      *it >> t;
-	      v[name].push(t);
+	      if (t.isArray())
+		{
+		  for (BrefValueArray::const_iterator it = t.asArray().begin();
+		       it != t.asArray().end();
+		       ++it)
+		    {
+		      v[name][it->first] = it->second;
+		    }
+		}
+	      if (t.isList())
+		for (BrefValueList::const_iterator it = t.asList().begin();
+		     it != t.asList().end();
+		     ++it)
+		  {
+		    v[name].push(*it);
+		  }
 	    }
 	}
       else
@@ -128,8 +142,7 @@ void operator>>(const YAML::Node& node, BrefValue &v) {
     }
   catch (std::exception &e)
     {
-      std::cerr << e.what() << std::endl;
-      throw ConfigExcept{"Configuration file doesn't respect YAML standards, aborting and loading default configuration"};
+      throw ConfigExcept{e.what(), "\nConfiguration file doesn't respect YAML standards, aborting and loading default configuration"};
     }
 }
 
@@ -166,6 +179,23 @@ bool			Configuration::LoadFromFile(const std::string &input_file) {
     }
 }
 
+// Loaders
+
+void			Configuration::LoadDefaultConfig()
+{
+  _value["RootSection"]["DocumentRoot"].setString("/var/www/");
+  _value["RootSection"]["ListeningPort"].setInt(8080);
+}
+
+void			Configuration::LoadFromConfiguration(Configuration &c) {
+  _value = c.GetConfiguration();
+}
+
+void			Configuration::LoadFromConfiguration(BrefValue &v) {
+  _value = v;
+}
+
+// Getters
 BrefValue		&Configuration::GetConfiguration() {
   return _value;
 }

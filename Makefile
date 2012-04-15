@@ -16,6 +16,7 @@ MAIN_DIR	=	$(SRC_DIR)$(NAME)/
 
 NTWK_DIR	=	$(SRC_DIR)network/
 HTTP_DIR	=	$(SRC_DIR)http/
+CONFIG_DIR	=	$(SRC_DIR)config/
 
 TOOL_DIR	=	$(SRC_DIR)tools/
 ERR_DIR		=	$(SRC_DIR)error/
@@ -25,6 +26,7 @@ BREF_DIR	=	libBref/src/
 INCLUDE		=	-Iinclude/				\
 			-Isrc/					\
 			-Iapi/					\
+			-Isrc/tools/				\
 			-I$(LIB_DIR)Thread/include/		\
 			-I$(LIB_DIR)SNetwork/include/		\
 			-Ibref-api/include/bref/		\
@@ -49,14 +51,16 @@ SRCS		=	$(MAIN_DIR)main.cpp			\
 			$(TOOL_DIR)InChannel.cpp		\
 			$(TOOL_DIR)OutChannel.cpp		\
 			$(TOOL_DIR)file_contents.cpp		\
+			$(TOOL_DIR)baseexcept.cpp		\
 			\
-			$(BREF_DIR)config/BrefValue.cpp		\
-			$(BREF_DIR)config/Configuration.cpp	\
 			$(BREF_DIR)module/AModule.cpp		\
+			\
+			$(CONFIG_DIR)Configuration.cpp		\
+			$(CONFIG_DIR)BrefValue.cpp		\
 			\
 
 ## Libraries
-LIB		=	-L$(LIB_DIR) -lSNetwork -lThread -ldl
+LIB		=	-L$(LIB_DIR) -lSNetwork -lThread -ldl -lyaml-cpp
 
 # Objects
 OBJS		=	$(SRCS:.cpp=.o)

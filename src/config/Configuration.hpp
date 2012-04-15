@@ -22,7 +22,12 @@ public:
   virtual const		BrefValue & findValue(std::string const & key,
 				      HttpRequest const & request) const;
 
+  virtual void		LoadDefaultConfig();
+
   virtual bool		LoadFromFile(const std::string &input_file);
+  virtual void		LoadFromConfiguration(Configuration &);
+  virtual void		LoadFromConfiguration(BrefValue &);
+
   virtual BrefValue	&GetConfiguration();
 };
 
